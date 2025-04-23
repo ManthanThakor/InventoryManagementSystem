@@ -174,9 +174,9 @@ The **Presentation Layer** contains:
 
 ## Usage
 
-● Authentication: Use JWT authentication for API access.
-● Managing Users: Admin can add, update, and delete users.
-● Managing Items: Admin can manage items, categories, and suppliers.
+- Authentication: Use JWT authentication for API access.
+- Managing Users: Admin can add, update, and delete users.
+- ● Managing Items: Admin can manage items, categories, and suppliers.
 ● Managing Orders: Users can create, view, and manage purchase and sales orders.
 ● Managing Financials: The system calculates GST for purchase and sales items.
 
