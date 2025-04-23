@@ -76,6 +76,8 @@ The **Presentation Layer** contains:
 - **Username**: Login username
 - **PasswordHash**: Hashed password
 - **UserTypeId**: Foreign Key to `UserTypes`
+- **SupplierId**: Foreign Key to `Suppliers` (Optional, if the user is a supplier)
+- **CustomerId**: Foreign Key to `Customers` (Optional, if the user is a customer)
 
 ### 3. **Suppliers**
 
@@ -150,6 +152,8 @@ The **Presentation Layer** contains:
 - **CustomerItems → Items**: One-to-One (A customer item corresponds to one item)
 - **SupplierItems → PurchaseOrders**: Many-to-One (A supplier item belongs to a purchase order)
 - **CustomerItems → SalesOrders**: Many-to-One (A customer item belongs to a sales order)
+- **Users → Suppliers**: One-to-One (A user may be linked to one supplier, if applicable)
+- **Users → Customers**: One-to-One (A user may be linked to one customer, if applicable)
 
 ## Setup Instructions
 
@@ -164,7 +168,7 @@ The **Presentation Layer** contains:
    ```
 3. **Update connection strings**: In appsettings.json, set up the connection string for your database.
 
-4.Run the application:
+4. **Run the application**:
   ```bash
   dotnet run
   ```
