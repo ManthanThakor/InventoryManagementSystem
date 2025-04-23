@@ -157,3 +157,40 @@ The **Presentation Layer** contains:
    ```bash
    git clone https://github.com/your-username/inventory-management-system.git
    cd inventory-management-system
+   
+2. **Install dependencies**:
+  ```bash
+  dotnet restore
+   ```
+3. **Update connection strings**: In appsettings.json, set up the connection string for your database.
+
+4.Run the application:
+  ```bash
+  dotnet run
+  ```
+5. **Access the API**: Navigate to http://localhost:5000 (or the configured port).
+
+6. **Swagger UI**: Visit http://localhost:5000/swagger to explore the API endpoints.
+
+## Usage
+
+● Authentication: Use JWT authentication for API access.
+● Managing Users: Admin can add, update, and delete users.
+● Managing Items: Admin can manage items, categories, and suppliers.
+● Managing Orders: Users can create, view, and manage purchase and sales orders.
+● Managing Financials: The system calculates GST for purchase and sales items.
+
+## Contributing
+
+1. Fork the repository
+2. Create a new branch (git checkout -b feature-name)
+3. Make your changes
+4. Commit your changes (git commit -m 'Add new feature')
+5. Push to the branch (git push origin feature-name)
+6. Create a new Pull Request
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+ ```bash
+You can modify the repository URL and other project-specific details as needed. This README file gives an overview of your project, its structure, and how to set up and use the system.
+
