@@ -164,7 +164,7 @@ The **Presentation Layer** contains:
    ```
 3. **Update connection strings**: In appsettings.json, set up the connection string for your database.
 
-4.Run the application:
+4. **Run the application**:
   ```bash
   dotnet run
   ```
