@@ -76,8 +76,6 @@ The **Presentation Layer** contains:
 - **Username**: Login username
 - **PasswordHash**: Hashed password
 - **UserTypeId**: Foreign Key to `UserTypes`
-- **SupplierId**: Foreign Key to `Suppliers` (Optional, if the user is a supplier)
-- **CustomerId**: Foreign Key to `Customers` (Optional, if the user is a customer)
 
 ### 3. **Suppliers**
 
