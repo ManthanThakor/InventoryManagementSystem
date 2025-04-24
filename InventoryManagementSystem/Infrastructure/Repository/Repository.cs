@@ -1,82 +1,71 @@
-﻿using Domain;
-using Domain.CommonEntity;
-using Infrastructure.Data;
-using InfrastructureLayer.Repository;
+﻿using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-        private readonly DbSet<T> entities;
+        private readonly DbContext _dbContext;
+        private readonly DbSet<T> _dbSet;
+        private readonly ILogger<Repository<T>> _logger;
 
-        public Repository(ApplicationDbContext applicationDbContext)
+        public Repository(DbContext dbContext, ILogger<Repository<T>> logger)
         {
-            _applicationDbContext = applicationDbContext;
-            entities = _applicationDbContext.Set<T>();
-        }
-        public async Task<T> Get(Guid Id)
-        {
-            return await entities.FindAsync(Id);
+            _dbContext = dbContext;
+            _dbSet = dbContext.Set<T>();
+            _logger = logger;
         }
 
-        public async Task<ICollection<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return await entities.ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
-        public async Task<bool> Insert(T entity)
+        public async Task<T> GetById(Guid id)
         {
-            await entities.AddAsync(entity);
-            var result = await _applicationDbContext.SaveChangesAsync();
-            if (result > 0)
+            T? entity = await _dbSet.FindAsync(id);
+            if (entity == null)
             {
-                return true;
+                throw new Exception($"Entity with ID {id} not found.");
             }
-            return false;
+            return entity;
         }
 
-        public async Task<bool> Delete(T entity)
+        public async Task<T> Add(T entity)
         {
-            entities.Remove(entity);
-            var result = await _applicationDbContext.SaveChangesAsync();
-            if (result > 0)
+            await _dbSet.AddAsync(entity);
+            return entity;
+        }
+
+        public Task Update(T entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return Task.CompletedTask;
+        }
+
+        public Task Delete(T entity)
+        {
+            _dbSet.Remove(entity);
+            return Task.CompletedTask;
+        }
+
+        public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match)
+        {
+            return await _dbSet.Where(match).ToListAsync();
+        }
+
+        public async Task<T> FindSingle(Expression<Func<T, bool>> match)
+        {
+            var entity = await _dbSet.FirstOrDefaultAsync(match);
+            if (entity == null)
             {
-                return true;
+                _logger.LogError("Entity not found for the given criteria.");
+
+                throw new EntityNotFoundException("The entity was not found.");
             }
-            return false;
-        }
-
-        public T GetLast()
-        {
-            return entities.OrderByDescending(x => x.Id).FirstOrDefault();
-        }
-
-        public async Task<bool> Update(T entity)
-        {
-            entities.Update(entity);
-            var result = await _applicationDbContext.SaveChangesAsync();
-            if (result > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public async Task<T> Find(Expression<Func<T, bool>> match)
-        {
-            return await entities.FirstOrDefaultAsync(match);
-        }
-
-        public async Task<ICollection<T>> FindAll(Expression<Func<T, bool>> match)
-        {
-            return await entities.Where(match).ToListAsync();
+            return entity;
         }
     }
 }
