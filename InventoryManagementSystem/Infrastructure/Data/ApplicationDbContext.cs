@@ -104,17 +104,20 @@ namespace Infrastructure.Data
                 entity.HasOne(si => si.PurchaseOrder)
                       .WithMany(po => po.SupplierItems)
                       .HasForeignKey(si => si.PurchaseOrderId)
-                      .HasConstraintName("FK_SupplierItem_PurchaseOrderID");
+                      .HasConstraintName("FK_SupplierItem_PurchaseOrderID")
+                      .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(si => si.Item)
                       .WithOne(i => i.SupplierItem)
                       .HasForeignKey<SupplierItem>(si => si.ItemId)
-                      .HasConstraintName("FK_SupplierItem_ItemID");
+                      .HasConstraintName("FK_SupplierItem_ItemID")
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(si => si.Supplier)
                       .WithMany(s => s.SupplierItems)
                       .HasForeignKey(si => si.SupplierId)
-                      .HasConstraintName("FK_SupplierItem_SupplierID");
+                      .HasConstraintName("FK_SupplierItem_SupplierID")
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.Property(si => si.GSTAmount).HasPrecision(18, 2);
                 entity.Property(si => si.TotalAmount).HasPrecision(18, 2);

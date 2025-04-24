@@ -462,7 +462,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Item", "Item")
                         .WithOne("SupplierItem")
                         .HasForeignKey("Domain.Models.SupplierItem", "ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_SupplierItem_ItemID");
 
@@ -476,7 +476,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Supplier", "Supplier")
                         .WithMany("SupplierItems")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_SupplierItem_SupplierID");
 

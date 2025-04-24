@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class V2Change : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -200,19 +200,19 @@ namespace Infrastructure.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CustomerItem_ItemID",
                         column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CustomerItem_SalesOrderID",
                         column: x => x.SalesOrderId,
                         principalTable: "SalesOrders",
                         principalColumn: "SalesOrderId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,8 +235,7 @@ namespace Infrastructure.Migrations
                         name: "FK_SupplierItem_ItemID",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ItemId");
                     table.ForeignKey(
                         name: "FK_SupplierItem_PurchaseOrderID",
                         column: x => x.PurchaseOrderId,
@@ -247,8 +246,7 @@ namespace Infrastructure.Migrations
                         name: "FK_SupplierItem_SupplierID",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
-                        principalColumn: "SupplierId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SupplierId");
                 });
 
             migrationBuilder.CreateIndex(

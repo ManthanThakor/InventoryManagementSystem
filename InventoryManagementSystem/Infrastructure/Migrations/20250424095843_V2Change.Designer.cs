@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250424053152_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250424095843_V2Change")]
+    partial class V2Change
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -387,21 +387,21 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Customer", "Customer")
                         .WithMany("CustomerItems")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_CustomerItem_CustomerID");
 
                     b.HasOne("Domain.Models.Item", "Item")
                         .WithOne("CustomerItem")
                         .HasForeignKey("Domain.Models.CustomerItem", "ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_CustomerItem_ItemID");
 
                     b.HasOne("Domain.Models.SalesOrder", "SalesOrder")
                         .WithMany("CustomerItems")
                         .HasForeignKey("SalesOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_CustomerItem_SalesOrderID");
 
@@ -465,7 +465,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Item", "Item")
                         .WithOne("SupplierItem")
                         .HasForeignKey("Domain.Models.SupplierItem", "ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_SupplierItem_ItemID");
 
@@ -479,7 +479,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Supplier", "Supplier")
                         .WithMany("SupplierItems")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_SupplierItem_SupplierID");
 
