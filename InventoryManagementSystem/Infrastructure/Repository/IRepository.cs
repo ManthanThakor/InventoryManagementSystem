@@ -16,5 +16,7 @@ namespace Infrastructure.Repository
         Task Delete(T entity);
         Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match);
         Task<T> FindSingle(Expression<Func<T, bool>> match);
+        Task<int> SaveChangesMethod();
+
     }
 }

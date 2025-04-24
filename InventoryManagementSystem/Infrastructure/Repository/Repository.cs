@@ -36,19 +36,20 @@ namespace Infrastructure.Repository
         public async Task<T> Add(T entity)
         {
             await _dbSet.AddAsync(entity);
+            await SaveChangesMethod();
             return entity;
         }
 
-        public Task Update(T entity)
+        public async Task Update(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
-            return Task.CompletedTask;
+            await SaveChangesMethod();
         }
 
-        public Task Delete(T entity)
+        public async Task Delete(T entity)
         {
             _dbSet.Remove(entity);
-            return Task.CompletedTask;
+            await SaveChangesMethod();
         }
 
         public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match)
@@ -67,6 +68,11 @@ namespace Infrastructure.Repository
 
             }
             return entity;
+        }
+
+        public async Task<int> SaveChangesMethod()
+        {
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }
