@@ -9,37 +9,35 @@ namespace Domain.ViewModels
 {
     public class CategoryViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public int ItemCount { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+    }
+
+    public class CategoryDetailViewModel : CategoryViewModel
+    {
+        public List<ItemViewModel> Items { get; set; } = new List<ItemViewModel>();
     }
 
     public class CategoryCreateViewModel
     {
-        [Required(ErrorMessage = "Category Name is required")]
-        [StringLength(100, ErrorMessage = "Category Name cannot be longer than 100 characters")]
-        [Display(Name = "Category Name")]
+        [Required(ErrorMessage = "Category name is required")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 100 characters")]
         public string Name { get; set; } = string.Empty;
 
-        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters")]
-        [Display(Name = "Description")]
+        [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         public string Description { get; set; } = string.Empty;
     }
 
-    public class CategoryEditViewModel
+    public class CategoryUpdateViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "Category Name is required")]
-        [StringLength(100, ErrorMessage = "Category Name cannot be longer than 100 characters")]
-        [Display(Name = "Category Name")]
+        [Required(ErrorMessage = "Category name is required")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 100 characters")]
         public string Name { get; set; } = string.Empty;
 
-        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters")]
-        [Display(Name = "Description")]
+        [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         public string Description { get; set; } = string.Empty;
     }
 }
