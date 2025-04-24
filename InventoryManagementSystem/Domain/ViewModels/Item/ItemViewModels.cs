@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.ViewModels.Category;
 
-namespace Domain.ViewModels
+namespace Domain.ViewModels.Item
 {
     public class ItemViewModel
     {

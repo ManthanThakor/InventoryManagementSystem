@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ViewModels
+namespace Domain.ViewModels.User
 {
     public class RegisterResponseViewModel
     {

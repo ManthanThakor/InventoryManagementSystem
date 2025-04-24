@@ -1,4 +1,5 @@
-﻿using Domain.ViewModels.YourNamespace.Application.ViewModels;
+﻿using Domain.ViewModels.Authentication;
+using Domain.ViewModels.Orders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ViewModels
+namespace Domain.ViewModels.Customer
 {
     public class CustomerRegisterViewModel : RegisterViewModel
     {
