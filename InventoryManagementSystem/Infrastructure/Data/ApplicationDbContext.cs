@@ -37,7 +37,7 @@ namespace Infrastructure.Data
                 entity.HasOne(u => u.UserType)
                       .WithMany(ut => ut.Users)
                       .HasForeignKey(u => u.UserTypeId)
-                      .HasConstraintName("FK_User_UserType");
+                      .HasConstraintName("FK_User_UserTypeID");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -54,7 +54,7 @@ namespace Infrastructure.Data
                 entity.HasOne(i => i.Category)
                       .WithMany(c => c.Items)
                       .HasForeignKey(i => i.CategoryId)
-                      .HasConstraintName("FK_Item_Category");
+                      .HasConstraintName("FK_Item_CategoryID");
             });
 
             modelBuilder.Entity<Supplier>(entity =>
@@ -65,7 +65,7 @@ namespace Infrastructure.Data
                 entity.HasOne(s => s.User)
                       .WithOne(u => u.Supplier)
                       .HasForeignKey<Supplier>(s => s.UserId)
-                      .HasConstraintName("FK_Supplier_User");
+                      .HasConstraintName("FK_Supplier_UserID");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -76,7 +76,7 @@ namespace Infrastructure.Data
                 entity.HasOne(c => c.User)
                       .WithOne(u => u.Customer)
                       .HasForeignKey<Customer>(c => c.UserId)
-                      .HasConstraintName("FK_Customer_User");
+                      .HasConstraintName("FK_Customer_UserID");
             });
 
             modelBuilder.Entity<PurchaseOrder>(entity =>
@@ -87,7 +87,7 @@ namespace Infrastructure.Data
                 entity.HasOne(po => po.Supplier)
                       .WithMany(s => s.PurchaseOrders)
                       .HasForeignKey(po => po.SupplierId)
-                      .HasConstraintName("FK_PurchaseOrder_Supplier");
+                      .HasConstraintName("FK_PurchaseOrder_SupplierID");
             });
 
             modelBuilder.Entity<SupplierItem>(entity =>
@@ -98,17 +98,17 @@ namespace Infrastructure.Data
                 entity.HasOne(si => si.PurchaseOrder)
                       .WithMany(po => po.SupplierItems)
                       .HasForeignKey(si => si.PurchaseOrderId)
-                      .HasConstraintName("FK_SupplierItem_PurchaseOrder");
+                      .HasConstraintName("FK_SupplierItem_PurchaseOrderID");
 
                 entity.HasOne(si => si.Item)
                       .WithOne(i => i.SupplierItem)
                       .HasForeignKey<SupplierItem>(si => si.ItemId)
-                      .HasConstraintName("FK_SupplierItem_Item");
+                      .HasConstraintName("FK_SupplierItem_ItemID");
 
                 entity.HasOne(si => si.Supplier)
                       .WithMany(s => s.SupplierItems)
                       .HasForeignKey(si => si.SupplierId)
-                      .HasConstraintName("FK_SupplierItem_Supplier");
+                      .HasConstraintName("FK_SupplierItem_SupplierID");
             });
 
             modelBuilder.Entity<SalesOrder>(entity =>
@@ -119,7 +119,7 @@ namespace Infrastructure.Data
                 entity.HasOne(so => so.Customer)
                       .WithMany(c => c.SalesOrders)
                       .HasForeignKey(so => so.CustomerId)
-                      .HasConstraintName("FK_SalesOrder_Customer");
+                      .HasConstraintName("FK_SalesOrder_CustomerID");
             });
 
             modelBuilder.Entity<CustomerItem>(entity =>
@@ -130,18 +130,20 @@ namespace Infrastructure.Data
                 entity.HasOne(ci => ci.SalesOrder)
                       .WithMany(so => so.CustomerItems)
                       .HasForeignKey(ci => ci.SalesOrderId)
-                      .HasConstraintName("FK_CustomerItem_SalesOrder");
+                      .HasConstraintName("FK_CustomerItem_SalesOrderID");
 
                 entity.HasOne(ci => ci.Item)
                       .WithOne(i => i.CustomerItem)
                       .HasForeignKey<CustomerItem>(ci => ci.ItemId)
-                      .HasConstraintName("FK_CustomerItem_Item");
+                      .HasConstraintName("FK_CustomerItem_ItemID");
 
                 entity.HasOne(ci => ci.Customer)
                       .WithMany(c => c.CustomerItems)
                       .HasForeignKey(ci => ci.CustomerId)
-                      .HasConstraintName("FK_CustomerItem_Customer");
+                      .HasConstraintName("FK_CustomerItem_CustomerID");
             });
         }
+
     }
+}
 }

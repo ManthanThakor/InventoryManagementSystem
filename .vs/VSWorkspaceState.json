@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\InventoryManagementSystem",
+    "\\InventoryManagementSystem\\Application",
     "\\InventoryManagementSystem\\Domain",
-    "\\InventoryManagementSystem\\Domain\\Models"
+    "\\InventoryManagementSystem\\Infrastructure",
+    "\\InventoryManagementSystem\\PresentationApi"
   ],
-  "SelectedNode": "\\ .gitignore",
   "PreviewInSolutionExplorer": false
 }

@@ -12,16 +12,17 @@ namespace Domain.Models
     {
         public string FullName { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
+
         [JsonIgnore]
         public string PasswordHash { get; set; } = string.Empty;
-        public Guid UserTypeId { get; set; }
-        public Guid? SupplierId { get; set; }
-        public Guid? CustomerId { get; set; }
 
+        public Guid UserTypeId { get; set; }
 
         public virtual UserType? UserType { get; set; }
+
         [JsonIgnore]
         public virtual Supplier? Supplier { get; set; }
+
         [JsonIgnore]
         public virtual Customer? Customer { get; set; }
     }
