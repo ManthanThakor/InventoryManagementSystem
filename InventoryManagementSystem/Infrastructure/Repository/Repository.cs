@@ -63,7 +63,8 @@ namespace Infrastructure.Repository
             {
                 _logger.LogError("Entity not found for the given criteria.");
 
-                throw new EntityNotFoundException("The entity was not found.");
+                throw new EntityNotFoundException($"{typeof(T).Name} matching the condition was not found.");
+
             }
             return entity;
         }
