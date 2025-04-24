@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "d8X+gNtNTOfZIiEDurMx2zd4OpZvl9xno2OpBbYFS818ar5dWHGEeaXecKSjGMhoQwrr/OMOsjBD5/O0p5sb8w==",
+  "dgSpecHash": "h+/8DxuWa6Y=",
   "success": true,
   "projectFilePath": "E:\\manthan\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -82,7 +82,10 @@
     "C:\\Users\\TGSUser147\\.nuget\\packages\\system.text.json\\9.0.4\\system.text.json.9.0.4.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\TGSUser147\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.11\\microsoft.netcore.app.ref.8.0.11.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.11\\microsoft.windowsdesktop.app.ref.8.0.11.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.11\\microsoft.aspnetcore.app.ref.8.0.11.nupkg.sha512"
   ],
   "logs": []
 }

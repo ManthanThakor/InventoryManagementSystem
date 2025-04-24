@@ -55,6 +55,10 @@ namespace Infrastructure.Data
                       .WithMany(c => c.Items)
                       .HasForeignKey(i => i.CategoryId)
                       .HasConstraintName("FK_Item_CategoryID");
+
+                entity.Property(i => i.GSTPercent).HasPrecision(18, 2);
+                entity.Property(i => i.PurchasePrice).HasPrecision(18, 2);
+                entity.Property(i => i.SellingPrice).HasPrecision(18, 2);
             });
 
             modelBuilder.Entity<Supplier>(entity =>
@@ -88,6 +92,8 @@ namespace Infrastructure.Data
                       .WithMany(s => s.PurchaseOrders)
                       .HasForeignKey(po => po.SupplierId)
                       .HasConstraintName("FK_PurchaseOrder_SupplierID");
+
+                entity.Property(po => po.TotalAmount).HasPrecision(18, 2);
             });
 
             modelBuilder.Entity<SupplierItem>(entity =>
@@ -109,6 +115,9 @@ namespace Infrastructure.Data
                       .WithMany(s => s.SupplierItems)
                       .HasForeignKey(si => si.SupplierId)
                       .HasConstraintName("FK_SupplierItem_SupplierID");
+
+                entity.Property(si => si.GSTAmount).HasPrecision(18, 2);
+                entity.Property(si => si.TotalAmount).HasPrecision(18, 2);
             });
 
             modelBuilder.Entity<SalesOrder>(entity =>
@@ -120,6 +129,8 @@ namespace Infrastructure.Data
                       .WithMany(c => c.SalesOrders)
                       .HasForeignKey(so => so.CustomerId)
                       .HasConstraintName("FK_SalesOrder_CustomerID");
+
+                entity.Property(so => so.TotalAmount).HasPrecision(18, 2);
             });
 
             modelBuilder.Entity<CustomerItem>(entity =>
@@ -130,20 +141,24 @@ namespace Infrastructure.Data
                 entity.HasOne(ci => ci.SalesOrder)
                       .WithMany(so => so.CustomerItems)
                       .HasForeignKey(ci => ci.SalesOrderId)
-                      .HasConstraintName("FK_CustomerItem_SalesOrderID");
+                      .HasConstraintName("FK_CustomerItem_SalesOrderID")
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(ci => ci.Item)
                       .WithOne(i => i.CustomerItem)
                       .HasForeignKey<CustomerItem>(ci => ci.ItemId)
-                      .HasConstraintName("FK_CustomerItem_ItemID");
+                      .HasConstraintName("FK_CustomerItem_ItemID")
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(ci => ci.Customer)
                       .WithMany(c => c.CustomerItems)
                       .HasForeignKey(ci => ci.CustomerId)
-                      .HasConstraintName("FK_CustomerItem_CustomerID");
+                      .HasConstraintName("FK_CustomerItem_CustomerID")
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.Property(ci => ci.GSTAmount).HasPrecision(18, 2);
+                entity.Property(ci => ci.TotalAmount).HasPrecision(18, 2);
             });
         }
-
     }
-}
 }

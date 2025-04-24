@@ -14,3 +14,5 @@ E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Infrastructure\ob
 E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Infrastructure\obj\Debug\net8.0\refint\Infrastructure.dll
 E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
