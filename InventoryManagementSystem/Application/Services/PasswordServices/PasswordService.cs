@@ -7,7 +7,7 @@ namespace Infrastructure.Services
     {
         private readonly PasswordHasher<object> _hasher = new();
 
-        private readonly object _passwordHasherUser = new();
+        private readonly object _passwordHasherUser = new();// dummy object
 
         public string HashPassword(string password)
         {
