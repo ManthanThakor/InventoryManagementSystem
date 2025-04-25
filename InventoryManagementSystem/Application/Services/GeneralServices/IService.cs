@@ -15,7 +15,7 @@ namespace Application.Services.GeneralServices
         Task<T> Add(T entity);
         Task Update(T entity);
         Task Delete(Guid id);
-        Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);
-        Task<T> FindSingle(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match);
+        Task<T> FindSingle(Expression<Func<T, bool>> match);
     }
 }

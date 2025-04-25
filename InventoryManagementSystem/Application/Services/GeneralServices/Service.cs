@@ -1,6 +1,7 @@
 ﻿using Domain.CommonEntity;
 using Infrastructure.Repository;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Application.Services.GeneralServices
 {
@@ -49,14 +50,14 @@ namespace Application.Services.GeneralServices
             }
         }
 
-        public virtual async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match)
         {
-            return await _repository.Find(predicate);
+            return await _repository.Find(match);
         }
 
-        public virtual async Task<T> FindSingle(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T> FindSingle(Expression<Func<T, bool>> match)
         {
-            return await _repository.FindSingle(predicate);
+            return await _repository.FindSingle(match);
         }
     }
 }
