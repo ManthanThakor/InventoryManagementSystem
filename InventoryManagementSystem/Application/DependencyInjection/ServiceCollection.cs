@@ -25,15 +25,31 @@ namespace Application.DependencyInjection
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserTypeService, UserTypeService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            //services.AddScoped<IItemService, ItemService>();
-            //services.AddScoped<ICustomerService, CustomerService>();
-            //services.AddScoped<ISupplierService, SupplierService>();
-            //services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
-            //services.AddScoped<ISalesOrderService, SalesOrderService>();
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IAdminService, AdminService>();
+
 
             return services;
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//services.AddScoped<IItemService, ItemService>();
+//services.AddScoped<ICustomerService, CustomerService>();
+//services.AddScoped<ISupplierService, SupplierService>();
+//services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+//services.AddScoped<ISalesOrderService, SalesOrderService>();
+//services.AddScoped<IUserService, UserService>();
+//services.AddScoped<IAdminService, AdminService>();

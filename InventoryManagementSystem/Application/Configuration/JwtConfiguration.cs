@@ -3,10 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Configuration
 {
@@ -14,6 +11,13 @@ namespace Application.Configuration
     {
         public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            string? key = configuration["Jwt:Key"];
+
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("Jwt:Key", "JWT Key is missing in configuration.");
+            }
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -25,7 +29,7 @@ namespace Application.Configuration
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
                     };
                 });
         }
