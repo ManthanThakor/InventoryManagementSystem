@@ -53,7 +53,7 @@ namespace Infrastructure.Repository
             await SaveChangesMethod();
         }
 
-        public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match)
+        public async Task<IEnumerable<T>> FindAll(Expression<Func<T, bool>> match)
         {
             return await _dbSet.Where(match).ToListAsync();
         }

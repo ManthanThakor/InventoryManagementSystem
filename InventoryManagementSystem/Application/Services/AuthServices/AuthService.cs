@@ -1,252 +1,280 @@
-﻿//using Application.Services.JwtServices;
-//using Application.Services.PasswordServices;
-//using Domain.Models;
-//using Domain.ViewModels.Authentication;
-//using Domain.ViewModels.Customer;
-//using Domain.ViewModels.JwtUser;
-//using Domain.ViewModels.Supplier;
-//using Domain.ViewModels.User;
-//using Infrastructure.Repository;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Application.Services.JwtServices;
+using Application.Services.PasswordServices;
+using Domain.Models;
+using Domain.ViewModels.Authentication;
+using Domain.ViewModels.Customer;
+using Domain.ViewModels.JwtUser;
+using Domain.ViewModels.Supplier;
+using Domain.ViewModels.User;
+using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
-//namespace Application.Services.AuthServices
-//{
-//    public class AuthService : IAuthService
-//    {
-//        private readonly IRepository<User> _userRepository;
-//        private readonly IRepository<UserType> _userTypeRepository;
-//        private readonly IRepository<Customer> _customerRepository;
-//        private readonly IRepository<Supplier> _supplierRepository;
-//        private readonly IPasswordService _passwordService;
-//        private readonly IJwtService _jwtService;
+namespace Application.Services.AuthServices
+{
+    public class AuthService : IAuthService
+    {
+        private readonly IRepository<User> _userRepository;
+        private readonly IRepository<UserType> _userTypeRepository;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<Supplier> _supplierRepository;
+        private readonly IPasswordService _passwordService;
+        private readonly IJwtService _jwtService;
 
-//        public AuthService(
-//            IRepository<User> userRepository,
-//            IRepository<UserType> userTypeRepository,
-//            IRepository<Customer> customerRepository,
-//            IRepository<Supplier> supplierRepository,
-//            IPasswordService passwordService,
-//            IJwtService jwtService)
-//        {
-//            _userRepository = userRepository;
-//            _userTypeRepository = userTypeRepository;
-//            _customerRepository = customerRepository;
-//            _supplierRepository = supplierRepository;
-//            _passwordService = passwordService;
-//            _jwtService = jwtService;
-//        }
+        public AuthService(
+            IRepository<User> userRepository,
+            IRepository<UserType> userTypeRepository,
+            IRepository<Customer> customerRepository,
+            IRepository<Supplier> supplierRepository,
+            IPasswordService passwordService,
+            IJwtService jwtService)
+        {
+            _userRepository = userRepository;
+            _userTypeRepository = userTypeRepository;
+            _customerRepository = customerRepository;
+            _supplierRepository = supplierRepository;
+            _passwordService = passwordService;
+            _jwtService = jwtService;
+        }
 
-//        public async Task<JwtResponseViewModel> Login(LoginViewModel model)
-//        {
-//            User user = await _userRepository.FindSingle(u => u.Username == model.Username);
-//            if (user == null)
-//            {
-//                return null;
-//            }
+        public async Task<JwtResponseViewModel> Login(LoginViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
-//            if (!_passwordService.VerifyPassword(model.Password, user.PasswordHash))
-//            {
-//                return null;
-//            }
+            User user = await _userRepository.FindSingle(u => u.Username == model.Username);
 
-//            var userType = await _userTypeRepository.GetById(user.UserTypeId);
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found.");
+            }
 
-//            JwtUserViewModel jwtUser = new JwtUserViewModel
-//            {
-//                UserId = user.Id,
-//                Username = user.Username,
-//                UserType = userType.Name
-//            };
+            if (!_passwordService.VerifyPassword(model.Password, user.PasswordHash))
+            {
+                throw new InvalidOperationException("Invalid password.");
+            }
 
-//            var token = _jwtService.GenerateToken(jwtUser);
+            UserType userType = await _userTypeRepository.GetById(user.UserTypeId);
 
-//            return new JwtResponseViewModel
-//            {
-//                Token = token.token,
-//                Expiration = token.expiration,
-//                Username = user.Username,
-//                UserType = userType.Name,
-//                UserId = user.Id
-//            };
-//        }
+            JwtUserViewModel jwtUser = new JwtUserViewModel
+            {
+                UserId = user.Id,
+                Username = user.Username,
+                UserType = userType.Name
+            };
 
-//        public async Task<RegisterResponseViewModel> Register(RegisterViewModel model)
-//        {
-//            if (model.Password != model.ConfirmPassword)
-//            {
-//                return new RegisterResponseViewModel
-//                {
-//                    Succeeded = false,
-//                    Message = "Password and confirmation password do not match."
-//                };
-//            }
+            var (token, expiration) = _jwtService.GenerateToken(jwtUser);
 
-//            var existingUser = await _userRepository.FindSingle(u => u.Username == model.Username);
-//            if (existingUser != null)
-//            {
-//                return new RegisterResponseViewModel
-//                {
-//                    Succeeded = false,
-//                    Message = "Username already exists."
-//                };
-//            }
+            return new JwtResponseViewModel
+            {
+                Token = token,
+                Expiration = expiration,
+                Username = user.Username,
+                UserType = userType.Name,
+                UserId = user.Id
+            };
+        }
 
-//            var userType = await _userTypeRepository.GetById(model.UserTypeId);
-//            if (userType == null)
-//            {
-//                return new RegisterResponseViewModel
-//                {
-//                    Succeeded = false,
-//                    Message = "Invalid user type."
-//                };
-//            }
+        public async Task<RegisterResponseViewModel> Register(RegisterViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
-//            var user = new User
-//            {
-//                Id = Guid.NewGuid(),
-//                FullName = model.FullName,
-//                Username = model.Username,
-//                PasswordHash = _passwordService.HashPassword(model.Password),
-//                UserTypeId = model.UserTypeId,
-//                CreatedDate = DateTime.UtcNow,
-//                ModifiedDate = DateTime.UtcNow
-//            };
+            User existingUser = await _userRepository.FindSingle(u => u.Username == model.Username);
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("Username already exists.");
+            }
 
-//            await _userRepository.Add(user);
-//            await _userRepository.SaveChangesMethod();
+            UserType userType = await _userTypeRepository.GetById(model.UserTypeId);
+            if (userType == null)
+            {
+                throw new InvalidOperationException("Invalid user type.");
+            }
 
-//            return new RegisterResponseViewModel
-//            {
-//                Succeeded = true,
-//                Message = "User registered successfully.",
-//                UserId = user.Id,
-//                UserTypeId = user.UserTypeId,
-//                UserTypeName = userType.Name
-//            };
-//        }
+            User newUser = new User
+            {
+                FullName = model.FullName,
+                Username = model.Username,
+                PasswordHash = _passwordService.HashPassword(model.Password),
+                UserTypeId = model.UserTypeId,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow
+            };
 
-//        public async Task<CustomerRegisterResponseViewModel> RegisterCustomer(CustomerRegisterViewModel model)
-//        {
-//            var registerResult = await Register(model);
-//            if (!registerResult.Succeeded)
-//            {
-//                return new CustomerRegisterResponseViewModel
-//                {
-//                    Succeeded = false,
-//                    Message = registerResult.Message
-//                };
-//            }
+            User registeredUser = await _userRepository.Add(newUser);
 
-//            var customer = new Customer
-//            {
-//                Id = Guid.NewGuid(),
-//                Name = model.Name,
-//                Address = model.Address,
-//                Contact = model.Contact,
-//                UserId = registerResult.UserId,
-//                CreatedDate = DateTime.UtcNow,
-//                ModifiedDate = DateTime.UtcNow
-//            };
+            return new RegisterResponseViewModel
+            {
+                Succeeded = true,
+                Message = "Registration successful.",
+                UserId = registeredUser.Id,
+                UserTypeId = registeredUser.UserTypeId,
+                UserTypeName = userType.Name
+            };
+        }
 
-//            await _customerRepository.Add(customer);
-//            await _customerRepository.SaveChangesMethod();
+        public async Task<CustomerRegisterResponseViewModel> RegisterCustomer(CustomerRegisterViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
-//            return new CustomerRegisterResponseViewModel
-//            {
-//                Succeeded = true,
-//                Message = "Customer registered successfully.",
-//                UserId = registerResult.UserId,
-//                UserTypeId = registerResult.UserTypeId,
-//                UserTypeName = registerResult.UserTypeName,
-//                CustomerId = customer.Id
-//            };
-//        }
+            RegisterViewModel registerModel = new RegisterViewModel
+            {
+                FullName = model.FullName,
+                Username = model.Username,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword,
+                UserTypeId = model.UserTypeId
+            };
 
-//        public async Task<SupplierRegisterResponseViewModel> RegisterSupplier(SupplierRegisterViewModel model)
-//        {
-//            var registerResult = await Register(model);
-//            if (!registerResult.Succeeded)
-//            {
-//                return new SupplierRegisterResponseViewModel
-//                {
-//                    Succeeded = false,
-//                    Message = registerResult.Message
-//                };
-//            }
+            RegisterResponseViewModel registerResponse = await Register(registerModel);
 
-//            var supplier = new Supplier
-//            {
-//                Id = Guid.NewGuid(),
-//                Name = model.Name,
-//                Address = model.Address,
-//                Contact = model.Contact,
-//                UserId = registerResult.UserId,
-//                CreatedDate = DateTime.UtcNow,
-//                ModifiedDate = DateTime.UtcNow
-//            };
+            Customer customer = new Customer
+            {
+                Name = model.Name,
+                Address = model.Address,
+                Contact = model.Contact,
+                UserId = registerResponse.UserId,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow
+            };
 
-//            await _supplierRepository.Add(supplier);
-//            await _supplierRepository.SaveChangesMethod();
+            Customer registeredCustomer = await _customerRepository.Add(customer);
 
-//            return new SupplierRegisterResponseViewModel
-//            {
-//                Succeeded = true,
-//                Message = "Supplier registered successfully.",
-//                UserId = registerResult.UserId,
-//                UserTypeId = registerResult.UserTypeId,
-//                UserTypeName = registerResult.UserTypeName,
-//                SupplierId = supplier.Id
-//            };
-//        }
+            return new CustomerRegisterResponseViewModel
+            {
+                Succeeded = registerResponse.Succeeded,
+                Message = registerResponse.Message,
+                UserId = registerResponse.UserId,
+                UserTypeId = registerResponse.UserTypeId,
+                UserTypeName = registerResponse.UserTypeName,
+                CustomerId = registeredCustomer.Id
+            };
+        }
 
-//        public async Task<UserProfileViewModel> GetUserProfile(Guid userId)
-//        {
-//            var user = await _userRepository.GetById(userId);
-//            if (user == null)
-//            {
-//                return null;
-//            }
+        public async Task<SupplierRegisterResponseViewModel> RegisterSupplier(SupplierRegisterViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
-//            var userType = await _userTypeRepository.GetById(user.UserTypeId);
+            RegisterViewModel registerModel = new RegisterViewModel
+            {
+                FullName = model.FullName,
+                Username = model.Username,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword,
+                UserTypeId = model.UserTypeId
+            };
 
-//            return new UserProfileViewModel
-//            {
-//                Id = user.Id,
-//                FullName = user.FullName,
-//                Username = user.Username,
-//                UserType = userType.Name
-//            };
-//        }
+            RegisterResponseViewModel registerResponse = await Register(registerModel);
 
-//        public async Task<bool> ChangePassword(Guid userId, ChangePasswordViewModel model)
-//        {
-//            var user = await _userRepository.GetById(userId);
-//            if (user == null)
-//            {
-//                return false;
-//            }
+            Supplier supplier = new Supplier
+            {
+                Name = model.Name,
+                Address = model.Address,
+                Contact = model.Contact,
+                UserId = registerResponse.UserId,
+                CreatedDate = DateTime.UtcNow,
+                ModifiedDate = DateTime.UtcNow
+            };
 
-//            if (!_passwordService.VerifyPassword(model.CurrentPassword, user.PasswordHash))
-//            {
-//                return false;
-//            }
+            Supplier registeredSupplier = await _supplierRepository.Add(supplier);
 
-//            if (model.NewPassword != model.ConfirmPassword)
-//            {
-//                return false;
-//            }
+            return new SupplierRegisterResponseViewModel
+            {
+                Succeeded = registerResponse.Succeeded,
+                Message = registerResponse.Message,
+                UserId = registerResponse.UserId,
+                UserTypeId = registerResponse.UserTypeId,
+                UserTypeName = registerResponse.UserTypeName,
+                SupplierId = registeredSupplier.Id
+            };
+        }
 
-//            user.PasswordHash = _passwordService.HashPassword(model.NewPassword);
-//            user.ModifiedDate = DateTime.UtcNow;
+        public async Task<UserProfileViewModel> GetUserProfile(Guid userId)
+        {
+            User user = await _userRepository.GetById(userId);
 
-//            await _userRepository.Update(user);
-//            await _userRepository.SaveChangesMethod();
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found.");
+            }
 
-//            return true;
-//        }
-//    }
-//}
+            UserType userType = await _userTypeRepository.GetById(user.UserTypeId);
+
+            return new UserProfileViewModel
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Username = user.Username,
+                UserType = userType.Name
+            };
+        }
+
+        public async Task<bool> ChangePassword(Guid userId, ChangePasswordViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            User user = await _userRepository.GetById(userId);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found.");
+            }
+
+            if (!_passwordService.VerifyPassword(model.CurrentPassword, user.PasswordHash))
+            {
+                throw new InvalidOperationException("Current password is incorrect.");
+            }
+
+            user.PasswordHash = _passwordService.HashPassword(model.NewPassword);
+            user.ModifiedDate = DateTime.UtcNow;
+
+            await _userRepository.Update(user);
+            return true;
+        }
+
+        public async Task EnsureAdminUserExists()
+        {
+            UserType adminUserType = await _userTypeRepository.FindSingle(ut => ut.Name == "Admin");
+
+            if (adminUserType == null)
+            {
+                adminUserType = new UserType
+                {
+                    Name = "Admin",
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow
+                };
+                adminUserType = await _userTypeRepository.Add(adminUserType);
+            }
+
+            User adminUser = await _userRepository.FindSingle(u => u.Username == "admin");
+
+            if (adminUser == null)
+            {
+                adminUser = new User
+                {
+                    FullName = "System Administrator",
+                    Username = "admin",
+                    PasswordHash = _passwordService.HashPassword("admin@123"),
+                    UserTypeId = adminUserType.Id,
+                    CreatedDate = DateTime.UtcNow,
+                    ModifiedDate = DateTime.UtcNow
+                };
+                await _userRepository.Add(adminUser);
+            }
+        }
+    }
+}

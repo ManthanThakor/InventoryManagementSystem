@@ -9,7 +9,7 @@ namespace Domain.ViewModels.User
 {
     public class UserTypeViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 
@@ -22,7 +22,7 @@ namespace Domain.ViewModels.User
 
     public class UserTypeUpdateViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "User type name is required")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 50 characters")]

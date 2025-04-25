@@ -99,7 +99,7 @@ namespace Application.Services.CategoryServices
                 throw new ArgumentNullException(nameof(model));
             }
 
-            Category? category = await _categoryRepository.GetById(model.Id);
+            Category category = await _categoryRepository.GetById(model.Id);
 
             if (category == null)
             {
@@ -111,7 +111,6 @@ namespace Application.Services.CategoryServices
             category.ModifiedDate = DateTime.UtcNow;
 
             await _categoryRepository.Update(category);
-            await _categoryRepository.SaveChangesMethod();
 
             CategoryViewModel updatedCategoryViewModel = new CategoryViewModel
             {
@@ -125,7 +124,7 @@ namespace Application.Services.CategoryServices
 
         public async Task<bool> DeleteCategory(Guid id)
         {
-            Category? category = await _categoryRepository.GetById(id);
+            Category category = await _categoryRepository.GetById(id);
 
             if (category == null)
             {
@@ -133,7 +132,6 @@ namespace Application.Services.CategoryServices
             }
 
             await _categoryRepository.Delete(category);
-            await _categoryRepository.SaveChangesMethod();
 
             return true;
         }
@@ -147,7 +145,7 @@ namespace Application.Services.CategoryServices
 
             string lowerSearchTerm = searchTerm.ToLower();
 
-            IEnumerable<Category> categories = await _categoryRepository.Find(c => c.Name.ToLower().Contains(lowerSearchTerm));
+            IEnumerable<Category> categories = await _categoryRepository.FindAll(c => c.Name.ToLower().Contains(lowerSearchTerm));
 
             List<CategoryViewModel> categoryViewModels = new List<CategoryViewModel>();
 
@@ -165,7 +163,6 @@ namespace Application.Services.CategoryServices
                     categoryViewModels.Add(categoryViewModel);
                 }
             }
-
             return categoryViewModels;
         }
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "089CWLyPRBnz8hL0enkJcqQXXDOlv5zjEJfRig3rZQc1nDbAGZE2SisuaHxZnS1MjjNcrCyhMvc2P39/emdcFA==",
+  "dgSpecHash": "7Lmoet5Z7muMX2F9e1W7NC5MPhVvxySwhp2OPL0T5iTyw0JnpD8s7qhsV0+4cAPxqRl+ivqUnL8rSnzWDfNVHQ==",
   "success": true,
   "projectFilePath": "E:\\manthan\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.3.0\\microsoft.aspnetcore.authentication.cookies.2.3.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.3.0\\microsoft.aspnetcore.authentication.core.2.3.0.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.4\\microsoft.aspnetcore.authentication.jwtbearer.8.0.4.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.3.0\\microsoft.aspnetcore.cryptography.internal.2.3.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\2.3.0\\microsoft.aspnetcore.cryptography.keyderivation.2.3.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.3.0\\microsoft.aspnetcore.dataprotection.2.3.0.nupkg.sha512",
@@ -51,8 +52,8 @@
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.4.0\\microsoft.identitymodel.abstractions.8.4.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.4.0\\microsoft.identitymodel.jsonwebtokens.8.4.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.logging\\8.4.0\\microsoft.identitymodel.logging.8.4.0.nupkg.sha512",
-    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.35.0\\microsoft.identitymodel.protocols.6.35.0.nupkg.sha512",
-    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.35.0\\microsoft.identitymodel.protocols.openidconnect.6.35.0.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.1.2\\microsoft.identitymodel.protocols.7.1.2.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.1.2\\microsoft.identitymodel.protocols.openidconnect.7.1.2.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.4.0\\microsoft.identitymodel.tokens.8.4.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.net.http.headers\\2.3.0\\microsoft.net.http.headers.2.3.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",

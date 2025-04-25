@@ -1,114 +1,126 @@
-﻿//using Domain.Models;
-//using Domain.ViewModels.User;
-//using Infrastructure.Repository;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Application.Services.GeneralServices;
+using Domain.Models;
+using Domain.ViewModels.User;
+using Infrastructure.Repository;
 
-//namespace Application.Services.UserTypeServices
-//{
-//    public class UserTypeService : IUserTypeService
-//    {
-//        private readonly IRepository<UserType> _userTypeRepository;
+namespace Application.Services.UserTypeServices
+{
+    public class UserTypeService : IUserTypeService
+    {
+        private readonly IRepository<UserType> _userTypeRepository;
 
-//        public UserTypeService(IRepository<UserType> userTypeRepository)
-//        {
-//            _userTypeRepository = userTypeRepository;
-//        }
+        public UserTypeService(IRepository<UserType> userTypeRepository)
+        {
+            _userTypeRepository = userTypeRepository;
+        }
 
-//        public async Task<IEnumerable<UserTypeViewModel>> GetAllUserTypes()
-//        {
-//            var userTypes = await _userTypeRepository.GetAll();
+        public async Task<IEnumerable<UserTypeViewModel>> GetAllUserTypes()
+        {
+            IEnumerable<UserType> userTypes = await _userTypeRepository.GetAll();
 
-//            return userTypes.Select(ut => new UserTypeViewModel
-//            {
-//                Id = ut.Id,
-//                Name = ut.Name
-//            });
-//        }
+            List<UserTypeViewModel> userTypeViewModels = new List<UserTypeViewModel>();
 
-//        public async Task<UserTypeViewModel> GetUserTypeById(Guid id)
-//        {
-//            var userType = await _userTypeRepository.GetById(id);
-//            if (userType == null)
-//            {
-//                return null;
-//            }
+            foreach (UserType userType in userTypes)
+            {
+                if (userType != null)
+                {
+                    UserTypeViewModel userTypeViewModel = new UserTypeViewModel
+                    {
+                        Id = userType.Id,
+                        Name = userType.Name
+                    };
 
-//            return new UserTypeViewModel
-//            {
-//                Id = userType.Id,
-//                Name = userType.Name
-//            };
-//        }
+                    userTypeViewModels.Add(userTypeViewModel);
+                }
+            }
+            return userTypeViewModels;
+        }
 
-//        public async Task<UserTypeViewModel> CreateUserType(UserTypeCreateViewModel model)
-//        {
-//            var existingUserType = await _userTypeRepository.FindSingle(ut => ut.Name == model.Name);
-//            if (existingUserType != null)
-//            {
-//                return null;
-//            }
+        public async Task<UserTypeViewModel> GetUserTypeById(Guid id)
+        {
+            UserType userType = await _userTypeRepository.GetById(id);
 
-//            var userType = new UserType
-//            {
-//                Id = Guid.NewGuid(),
-//                Name = model.Name,
-//                CreatedDate = DateTime.UtcNow,
-//                ModifiedDate = DateTime.UtcNow
-//            };
+            if (userType == null)
+            {
+                throw new InvalidOperationException($"UserType with ID {id} not found.");
+            }
 
-//            await _userTypeRepository.Add(userType);
-//            await _userTypeRepository.SaveChangesMethod();
+            UserTypeViewModel userTypeViewModel = new UserTypeViewModel
+            {
+                Id = userType.Id,
+                Name = userType.Name
+            };
 
-//            return new UserTypeViewModel
-//            {
-//                Id = userType.Id,
-//                Name = userType.Name
-//            };
-//        }
+            return userTypeViewModel;
+        }
 
-//        public async Task<UserTypeViewModel> UpdateUserType(UserTypeUpdateViewModel model)
-//        {
-//            var userType = await _userTypeRepository.GetById(model.Id);
-//            if (userType == null)
-//            {
-//                return null;
-//            }
+        public async Task<UserTypeViewModel> CreateUserType(UserTypeCreateViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
-//            var existingUserType = await _userTypeRepository.FindSingle(ut => ut.Name == model.Name && ut.Id != model.Id);
-//            if (existingUserType != null)
-//            {
-//                return null;
-//            }
+            UserType userType = new UserType
+            {
+                Name = model.Name
+            };
 
-//            userType.Name = model.Name;
-//            userType.ModifiedDate = DateTime.UtcNow;
+            UserType createdUserType = await _userTypeRepository.Add(userType);
 
-//            await _userTypeRepository.Update(userType);
-//            await _userTypeRepository.SaveChangesMethod();
+            if (createdUserType == null)
+            {
+                throw new InvalidOperationException("Failed to create UserType.");
+            }
 
-//            return new UserTypeViewModel
-//            {
-//                Id = userType.Id,
-//                Name = userType.Name
-//            };
-//        }
+            UserTypeViewModel userTypeViewModel = new UserTypeViewModel
+            {
+                Id = createdUserType.Id,
+                Name = createdUserType.Name
+            };
 
-//        public async Task<bool> DeleteUserType(Guid id)
-//        {
-//            var userType = await _userTypeRepository.GetById(id);
-//            if (userType == null)
-//            {
-//                return false;
-//            }
+            return userTypeViewModel;
+        }
 
-//            await _userTypeRepository.Delete(userType);
-//            await _userTypeRepository.SaveChangesMethod();
+        public async Task<UserTypeViewModel> UpdateUserType(UserTypeUpdateViewModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
-//            return true;
-//        }
-//    }
-//}
+            UserType userType = await _userTypeRepository.GetById(model.Id);
+
+            if (userType == null)
+            {
+                throw new InvalidOperationException("UserType not found.");
+            }
+
+            userType.Name = model.Name;
+
+            await _userTypeRepository.Update(userType);
+
+            UserTypeViewModel updatedUserTypeViewModel = new UserTypeViewModel
+            {
+                Id = userType.Id,
+                Name = userType.Name
+            };
+
+            return updatedUserTypeViewModel;
+        }
+
+        public async Task<bool> DeleteUserType(Guid id)
+        {
+            UserType userType = await _userTypeRepository.GetById(id);
+
+            if (userType == null)
+            {
+                return false;
+            }
+
+            await _userTypeRepository.Delete(userType);
+
+            return true;
+        }
+    }
+}
