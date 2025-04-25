@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.ViewModels.JwtUser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -9,7 +10,8 @@ namespace Application.Services.JwtServices
 {
     public interface IJwtService
     {
-        (string token, DateTime expiration) GenerateToken(Guid userId, string username, string userType);
-        ClaimsPrincipal ValidateToken(string token);
+        (string token, DateTime expiration) GenerateToken(JwtUserViewModel user);
+        ClaimsPrincipal? ValidateToken(string token);
     }
+
 }
