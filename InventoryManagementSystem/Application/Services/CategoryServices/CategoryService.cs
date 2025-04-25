@@ -3,6 +3,7 @@ using Domain.Models;
 using Domain.ViewModels.Category;
 using Domain.ViewModels.Item;
 using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.CategoryServices
 {
@@ -25,27 +26,26 @@ namespace Application.Services.CategoryServices
             {
                 if (category != null)
                 {
-                    CategoryViewModel categoryViewModel = new CategoryViewModel
+                    CategoryViewModel categoryViewMod = new CategoryViewModel
                     {
                         Id = category.Id,
                         Name = category.Name,
                         Description = category.Description
                     };
 
-                    categoryViewModels.Add(categoryViewModel);
+                    categoryViewModels.Add(categoryViewMod);
                 }
             }
-
             return categoryViewModels;
         }
 
-        public async Task<CategoryDetailViewModel?> GetCategoryById(Guid id)
+        public async Task<CategoryDetailViewModel> GetCategoryById(Guid id)
         {
-            Category? category = await _categoryRepository.GetById(id);
+            Category category = await _categoryRepository.GetById(id);
 
             if (category == null)
             {
-                return null;
+                throw new InvalidOperationException($"Category with ID {id} not found.");
             }
 
             CategoryDetailViewModel categoryDetailViewModel = new CategoryDetailViewModel
@@ -55,7 +55,6 @@ namespace Application.Services.CategoryServices
                 Description = category.Description,
                 CreatedDate = category.CreatedDate,
                 ModifiedDate = category.ModifiedDate,
-                Items = new List<ItemViewModel>()
             };
 
             return categoryDetailViewModel;
@@ -76,7 +75,7 @@ namespace Application.Services.CategoryServices
                 ModifiedDate = DateTime.UtcNow
             };
 
-            Category? createdCategory = await _categoryRepository.Add(category);
+            Category createdCategory = await _categoryRepository.Add(category);
 
             if (createdCategory == null)
             {

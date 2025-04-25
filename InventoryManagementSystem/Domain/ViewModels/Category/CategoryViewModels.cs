@@ -19,7 +19,7 @@ namespace Domain.ViewModels.Category
     {
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public List<ItemViewModel> Items { get; set; } = new List<ItemViewModel>();
+        //public List<ItemViewModel> Items { get; set; } = new List<ItemViewModel>();
     }
 
     public class CategoryCreateViewModel
