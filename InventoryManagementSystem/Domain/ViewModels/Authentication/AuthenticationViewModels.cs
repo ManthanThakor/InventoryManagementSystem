@@ -25,7 +25,7 @@ namespace Domain.ViewModels.Authentication
         public string ConfirmPassword { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "User Type is required")]
-        public int UserTypeId { get; set; }
+        public Guid UserTypeId { get; set; }
     }
 
     public class LoginViewModel

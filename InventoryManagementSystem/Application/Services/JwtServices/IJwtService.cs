@@ -11,7 +11,6 @@ namespace Application.Services.JwtServices
     public interface IJwtService
     {
         (string token, DateTime expiration) GenerateToken(JwtUserViewModel user);
-        ClaimsPrincipal? ValidateToken(string token);
     }
 
 }

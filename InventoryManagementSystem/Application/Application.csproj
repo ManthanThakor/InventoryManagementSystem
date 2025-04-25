@@ -10,4 +10,8 @@
 		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Services\UserServices\" />
+	</ItemGroup>
+
 </Project>
