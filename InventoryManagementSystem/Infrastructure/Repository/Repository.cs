@@ -1,11 +1,12 @@
-﻿using Infrastructure.Exceptions;
+﻿using Domain.CommonEntity;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly DbContext _dbContext;
         private readonly DbSet<T> _dbSet;
