@@ -18,6 +18,5 @@ namespace Infrastructure.Repository
         Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match);
         Task<T> FindSingle(Expression<Func<T, bool>> match);
         Task<int> SaveChangesMethod();
-
     }
 }

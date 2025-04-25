@@ -30,7 +30,6 @@ namespace Application.Services.GeneralServices
             entity.ModifiedDate = DateTime.UtcNow;
 
             T result = await _repository.Add(entity);
-            //await _repository.SaveChangesMethod();
             return result;
         }
 
