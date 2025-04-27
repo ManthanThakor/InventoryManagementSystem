@@ -51,7 +51,7 @@ namespace Application.Services.GeneralServices
 
         public virtual async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> match)
         {
-            return await _repository.Find(match);
+            return await _repository.FindAll(match);
         }
 
         public virtual async Task<T> FindSingle(Expression<Func<T, bool>> match)

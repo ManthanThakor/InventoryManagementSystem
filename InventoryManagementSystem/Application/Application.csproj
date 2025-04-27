@@ -7,11 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	  <Compile Remove="Services\UserServices\**" />
+	  <EmbeddedResource Remove="Services\UserServices\**" />
+	  <None Remove="Services\UserServices\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Services\UserServices\" />
+		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\InventoryManagementSystem",
-    "\\InventoryManagementSystem\\Application",
-    "\\InventoryManagementSystem\\Domain",
-    "\\InventoryManagementSystem\\Infrastructure",
-    "\\InventoryManagementSystem\\PresentationApi"
+    "\\InventoryManagementSystem"
   ],
+  "SelectedNode": "\\InventoryManagementSystem\\InventoryManagementSystem.sln",
   "PreviewInSolutionExplorer": false
 }

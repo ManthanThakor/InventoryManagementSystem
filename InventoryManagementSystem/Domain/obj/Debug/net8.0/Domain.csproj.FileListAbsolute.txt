@@ -10,3 +10,15 @@ E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\
 E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\refint\Domain.dll
 E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.pdb
 E:\manthan\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\ref\Domain.dll
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\bin\Debug\net8.0\Domain.deps.json
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\bin\Debug\net8.0\Domain.dll
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\bin\Debug\net8.0\Domain.pdb
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.dll
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\refint\Domain.dll
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.pdb
+D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\ref\Domain.dll
