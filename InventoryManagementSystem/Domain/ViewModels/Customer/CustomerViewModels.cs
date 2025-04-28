@@ -35,10 +35,13 @@ namespace Domain.ViewModels.Customer
         public UserProfileViewModel? User { get; set; }
     }
 
-    public class CustomerDetailViewModel : CustomerViewModel
+    public class  CustomerDetailViewModel : CustomerViewModel
     {
         public List<CustomerItemViewModel> CustomerItems { get; set; } = new List<CustomerItemViewModel>();
         public List<SalesOrderListViewModel> SalesOrders { get; set; } = new List<SalesOrderListViewModel>();
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 
     public class CustomerUpdateViewModel

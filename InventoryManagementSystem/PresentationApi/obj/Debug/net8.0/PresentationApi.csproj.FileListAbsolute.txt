@@ -363,3 +363,4 @@ D:\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug
 D:\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\Presenta.74B6C64A.Up2Date
 D:\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\PresentationApi.genruntimeconfig.cache
 D:\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\ref\PresentationApi.dll
+D:\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

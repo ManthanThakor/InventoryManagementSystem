@@ -64,9 +64,9 @@ namespace Application.Services.AuthServices
                 UserType = userType.Name
             };
 
-            var (token, expiration) = _jwtService.GenerateToken(jwtUser);
+            (string token, DateTime expiration) = _jwtService.GenerateToken(jwtUser);
 
-            return new JwtResponseViewModel
+            JwtResponseViewModel response = new JwtResponseViewModel
             {
                 Token = token,
                 Expiration = expiration,
@@ -74,6 +74,8 @@ namespace Application.Services.AuthServices
                 UserType = userType.Name,
                 UserId = user.Id
             };
+            return response;
+
         }
 
         public async Task<RegisterResponseViewModel> Register(RegisterViewModel model)

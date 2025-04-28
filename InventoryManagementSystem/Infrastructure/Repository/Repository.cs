@@ -1,4 +1,5 @@
 ﻿using Domain.CommonEntity;
+using Infrastructure.Data;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,11 +9,11 @@ namespace Infrastructure.Repository
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly DbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
         private readonly DbSet<T> _dbSet;
         private readonly ILogger<Repository<T>> _logger;
 
-        public Repository(DbContext dbContext, ILogger<Repository<T>> logger)
+        public Repository(ApplicationDbContext dbContext, ILogger<Repository<T>> logger)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<T>();

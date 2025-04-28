@@ -1,27 +1,45 @@
 using Application.Configuration;
-using Application.DependencyInjection;
+using Application.Services.AuthServices;
+using Application.Services.CategoryServices;
+using Application.Services.JwtServices;
+using Application.Services.PasswordServices;
+using Application.Services.UserTypeServices;
 using Infrastructure.Data;
+using Infrastructure.Repository;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using PresentationApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Add DbContext for SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Register custom services
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
-builder.Services.AddApplicationServices();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+//builder.Services.AddScoped<IPasswordService, PasswordService>();
+//builder.Services.AddScoped<IJwtService, JwtService>();
+//builder.Services.AddScoped<IAuthService, AuthService>();
+//builder.Services.AddScoped<IUserTypeService, UserTypeService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-builder.Services.AddControllers();
+// Register the custom filter globally
+builder.Services.AddScoped<ValidateModelAttribute>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.AddService<ValidateModelAttribute>();  // Add custom filter here
+});
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -29,10 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
