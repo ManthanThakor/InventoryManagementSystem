@@ -33,14 +33,19 @@ namespace Domain.ViewModels.Orders
 
     public class PurchaseOrderCreateViewModel
     {
-        [Required(ErrorMessage = "Supplier is required")]
+        [Required(ErrorMessage = "Supplier ID is required")]
         public Guid SupplierId { get; set; }
 
-        [Required(ErrorMessage = "Order date is required")]
-        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Order Date is required")]
         public DateTime OrderDate { get; set; }
 
-        [Required(ErrorMessage = "At least one item is required")]
-        public List<SupplierItemCreateViewModel> Items { get; set; } = new List<SupplierItemCreateViewModel>();
+        public List<PurchaseOrderItemCreateViewModel> Items { get; set; } = new List<PurchaseOrderItemCreateViewModel>();
     }
+
+    public class PurchaseOrderItemCreateViewModel
+    {
+        [Required(ErrorMessage = "Item ID is required")]
+        public Guid ItemId { get; set; }
+    }
+
 }
