@@ -1,0 +1,155 @@
+﻿//using Application.Services.AuthServices;
+//using Domain.Models;
+//using Domain.ViewModels.Authentication;
+//using Domain.ViewModels.Customer;
+//using Domain.ViewModels.Supplier;
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
+
+//namespace Presentation.Controllers
+//{
+//    public class AuthController : ApiControllerBase
+//    {
+//        private readonly IAuthService _authService;
+
+//        public AuthController(IAuthService authService)
+//        {
+//            _authService = authService;
+//        }
+
+//        [HttpPost("login")]
+//        [AllowAnonymous]
+//        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+//        {
+//            try
+//            {
+//                if (!ModelState.IsValid)
+//                {
+//                    return BadRequest(ModelState);
+//                }
+
+//                var response = await _authService.Login(model);
+//                return Ok(response);
+//            }
+//            catch (Exception ex)
+//            {
+//                return HandleException(ex);
+//            }
+//        }
+
+//        [HttpPost("register")]
+//        [AllowAnonymous]
+//        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+//        {
+//            try
+//            {
+//                if (!ModelState.IsValid)
+//                {
+//                    return BadRequest(ModelState);
+//                }
+
+//                var response = await _authService.Register(model);
+//                return Ok(response);
+//            }
+//            catch (Exception ex)
+//            {
+//                return HandleException(ex);
+//            }
+//        }
+
+//        [HttpPost("register/customer")]
+//        [AllowAnonymous]
+//        public async Task<IActionResult> RegisterCustomer([FromBody] CustomerRegisterViewModel model)
+//        {
+//            try
+//            {
+//                if (!ModelState.IsValid)
+//                {
+//                    return BadRequest(ModelState);
+//                }
+
+//                var response = await _authService.RegisterCustomer(model);
+//                return Ok(response);
+//            }
+//            catch (Exception ex)
+//            {
+//                return HandleException(ex);
+//            }
+//        }
+
+//        [HttpPost("register/supplier")]
+//        [AllowAnonymous]
+//        public async Task<IActionResult> RegisterSupplier([FromBody] SupplierRegisterViewModel model)
+//        {
+//            try
+//            {
+//                if (!ModelState.IsValid)
+//                {
+//                    return BadRequest(ModelState);
+//                }
+
+//                var response = await _authService.RegisterSupplier(model);
+//                return Ok(response);
+//            }
+//            catch (Exception ex)
+//            {
+//                return HandleException(ex);
+//            }
+//        }
+
+//        [HttpGet("profile")]
+//        public async Task<IActionResult> GetUserProfile()
+//        {
+//            try
+//            {
+//                var userId = GetCurrentUserId();
+//                if (userId == Guid.Empty)
+//                {
+//                    return Unauthorized();
+//                }
+
+//                var profile = await _authService.GetUserProfile(userId);
+//                return Ok(profile);
+//            }
+//            catch (Exception ex)
+//            {
+//                return HandleException(ex);
+//            }
+//        }
+
+//        [HttpPost("change-password")]
+//        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+//        {
+//            try
+//            {
+//                if (!ModelState.IsValid)
+//                {
+//                    return BadRequest(ModelState);
+//                }
+
+//                var userId = GetCurrentUserId();
+//                if (userId == Guid.Empty)
+//                {
+//                    return Unauthorized();
+//                }
+
+//                var result = await _authService.ChangePassword(userId, model);
+//                return Ok(new { success = result });
+//            }
+//            catch (Exception ex)
+//            {
+//                return HandleException(ex);
+//            }
+//        }
+
+//        private Guid GetCurrentUserId()
+//        {
+//            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "userId");
+//            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
+//            {
+//                return userId;
+//            }
+//            return Guid.Empty;
+//        }
+//    }
+//}

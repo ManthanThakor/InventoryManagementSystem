@@ -78,7 +78,6 @@ namespace Application.Services.ItemServices
                 throw new ArgumentNullException(nameof(model));
             }
 
-            // Verify category exists
             var category = await _categoryRepository.GetById(model.CategoryId);
             if (category == null)
             {

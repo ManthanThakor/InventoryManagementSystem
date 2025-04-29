@@ -14,17 +14,21 @@ namespace Application.Services.CustomerServices
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<CustomerItem> _customerItemRepository;
         private readonly IRepository<Item> _itemRepository;
+        private readonly IRepository<SalesOrder> _salesOrderRepository;
+
 
         public CustomerService(
             IRepository<Customer> customerRepository,
             IRepository<User> userRepository,
             IRepository<CustomerItem> customerItemRepository,
-            IRepository<Item> itemRepository)
+            IRepository<Item> itemRepository,
+            IRepository<SalesOrder> salesOrderRepository)
         {
             _customerRepository = customerRepository;
             _userRepository = userRepository;
             _customerItemRepository = customerItemRepository;
             _itemRepository = itemRepository;
+            _salesOrderRepository = salesOrderRepository;
         }
 
         public async Task<IEnumerable<CustomerViewModel>> GetAllCustomers()
@@ -50,7 +54,7 @@ namespace Application.Services.CustomerServices
                             Id = user.Id,
                             FullName = user.FullName,
                             Username = user.Username,
-                            UserType = "Customer" // Assuming UserType is already loaded
+                            UserType = "Customer"
                         }
                     };
 
@@ -108,7 +112,22 @@ namespace Application.Services.CustomerServices
                 }
             }
 
-            CustomerDetailViewModel customerDetailViewModel = new CustomerDetailViewModel
+            // Get sales orders for this customer
+            var salesOrders = await _salesOrderRepository.FindAll(so => so.CustomerId == id);
+            var salesOrderViewModels = new List<SalesOrderListViewModel>();
+
+            foreach (var order in salesOrders)
+            {
+                salesOrderViewModels.Add(new SalesOrderListViewModel
+                {
+                    Id = order.Id,
+                    OrderNo = order.OrderNo,
+                    OrderDate = order.OrderDate,
+                    TotalAmount = order.TotalAmount
+                });
+            }
+
+            return new CustomerDetailViewModel
             {
                 Id = customer.Id,
                 Name = customer.Name,
@@ -119,14 +138,11 @@ namespace Application.Services.CustomerServices
                     Id = user.Id,
                     FullName = user.FullName,
                     Username = user.Username,
-                    UserType = "Customer" // Assuming UserType is already loaded
+                    UserType = "Customer"
                 },
                 CustomerItems = customerItemViewModels,
-                // We'll fetch sales orders in a separate method
-                SalesOrders = new List<Domain.ViewModels.SalesOrder.SalesOrderViewModel>()
+                SalesOrders = salesOrderViewModels
             };
-
-            return customerDetailViewModel;
         }
 
         public async Task<CustomerViewModel> UpdateCustomer(CustomerUpdateViewModel model)
@@ -152,7 +168,7 @@ namespace Application.Services.CustomerServices
 
             var user = await _userRepository.GetById(customer.UserId);
 
-            CustomerViewModel customerViewModel = new CustomerViewModel
+            return new CustomerViewModel
             {
                 Id = customer.Id,
                 Name = customer.Name,
@@ -163,11 +179,9 @@ namespace Application.Services.CustomerServices
                     Id = user.Id,
                     FullName = user.FullName,
                     Username = user.Username,
-                    UserType = "Customer" // Assuming UserType is already loaded
+                    UserType = "Customer"
                 } : null
             };
-
-            return customerViewModel;
         }
 
         public async Task<bool> DeleteCustomer(Guid id)
@@ -211,24 +225,20 @@ namespace Application.Services.CustomerServices
 
                 if (item != null)
                 {
-                    var itemViewModel = new Domain.ViewModels.Item.ItemViewModel
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        GSTPercent = item.GSTPercent,
-                        PurchasePrice = item.PurchasePrice,
-                        SellingPrice = item.SellingPrice
-                    };
-
-                    var customerItemViewModel = new CustomerItemViewModel
+                    customerItemViewModels.Add(new CustomerItemViewModel
                     {
                         Id = customerItem.Id,
-                        Item = itemViewModel,
+                        Item = new Domain.ViewModels.Item.ItemViewModel
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            GSTPercent = item.GSTPercent,
+                            PurchasePrice = item.PurchasePrice,
+                            SellingPrice = item.SellingPrice
+                        },
                         GSTAmount = customerItem.GSTAmount,
                         TotalAmount = customerItem.TotalAmount
-                    };
-
-                    customerItemViewModels.Add(customerItemViewModel);
+                    });
                 }
             }
 
@@ -256,12 +266,16 @@ namespace Application.Services.CustomerServices
                 throw new InvalidOperationException($"Item with ID {model.ItemId} not found.");
             }
 
+            decimal gstAmount = (item.SellingPrice * item.GSTPercent) / 100;
+
+            decimal totalAmount = item.SellingPrice + gstAmount;
+
             CustomerItem customerItem = new CustomerItem
             {
                 ItemId = model.ItemId,
                 CustomerId = model.CustomerId,
-                GSTAmount = model.GSTAmount,
-                TotalAmount = model.TotalAmount,
+                GSTAmount = gstAmount,
+                TotalAmount = totalAmount,
                 SalesOrderId = model.SalesOrderId,
                 CreatedDate = DateTime.UtcNow,
                 ModifiedDate = DateTime.UtcNow
@@ -269,24 +283,20 @@ namespace Application.Services.CustomerServices
 
             CustomerItem createdCustomerItem = await _customerItemRepository.Add(customerItem);
 
-            var itemViewModel = new Domain.ViewModels.Item.ItemViewModel
-            {
-                Id = item.Id,
-                Name = item.Name,
-                GSTPercent = item.GSTPercent,
-                PurchasePrice = item.PurchasePrice,
-                SellingPrice = item.SellingPrice
-            };
-
-            CustomerItemViewModel customerItemViewModel = new CustomerItemViewModel
+            return new CustomerItemViewModel
             {
                 Id = createdCustomerItem.Id,
-                Item = itemViewModel,
+                Item = new Domain.ViewModels.Item.ItemViewModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    GSTPercent = item.GSTPercent,
+                    PurchasePrice = item.PurchasePrice,
+                    SellingPrice = item.SellingPrice
+                },
                 GSTAmount = createdCustomerItem.GSTAmount,
                 TotalAmount = createdCustomerItem.TotalAmount
             };
-
-            return customerItemViewModel;
         }
 
         public async Task<bool> RemoveCustomerItem(Guid customerItemId)
@@ -324,7 +334,7 @@ namespace Application.Services.CustomerServices
 
                 if (user != null)
                 {
-                    CustomerViewModel customerViewModel = new CustomerViewModel
+                    customerViewModels.Add(new CustomerViewModel
                     {
                         Id = customer.Id,
                         Name = customer.Name,
@@ -335,11 +345,9 @@ namespace Application.Services.CustomerServices
                             Id = user.Id,
                             FullName = user.FullName,
                             Username = user.Username,
-                            UserType = "Customer" // Assuming UserType is already loaded
+                            UserType = "Customer"
                         }
-                    };
-
-                    customerViewModels.Add(customerViewModel);
+                    });
                 }
             }
 

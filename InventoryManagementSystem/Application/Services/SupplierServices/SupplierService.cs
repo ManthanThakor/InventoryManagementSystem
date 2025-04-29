@@ -111,9 +111,8 @@ namespace Application.Services.SupplierServices
                 }
             }
 
-            // Get purchase orders for this supplier
-            var purchaseOrders = await _purchaseOrderRepository.FindAll(po => po.SupplierId == id);
-            var purchaseOrderViewModels = new List<PurchaseOrderListViewModel>();
+            IEnumerable<PurchaseOrder> purchaseOrders = await _purchaseOrderRepository.FindAll(po => po.SupplierId == id);
+            List<PurchaseOrderListViewModel> purchaseOrderViewModels = new List<PurchaseOrderListViewModel>();
 
             foreach (var order in purchaseOrders)
             {
@@ -250,26 +249,28 @@ namespace Application.Services.SupplierServices
                 throw new ArgumentNullException(nameof(model));
             }
 
-            // Verify supplier exists
             var supplier = await _supplierRepository.GetById(model.SupplierId);
             if (supplier == null)
             {
                 throw new InvalidOperationException($"Supplier with ID {model.SupplierId} not found.");
             }
 
-            // Verify item exists
             var item = await _itemRepository.GetById(model.ItemId);
             if (item == null)
             {
                 throw new InvalidOperationException($"Item with ID {model.ItemId} not found.");
             }
 
+            decimal gstAmount = (item.PurchasePrice * item.GSTPercent) / 100;
+
+            decimal totalAmount = item.PurchasePrice + gstAmount;
+
             SupplierItem supplierItem = new SupplierItem
             {
                 ItemId = model.ItemId,
                 SupplierId = model.SupplierId,
-                GSTAmount = model.GSTAmount,
-                TotalAmount = model.TotalAmount,
+                GSTAmount = gstAmount,
+                TotalAmount = totalAmount,
                 PurchaseOrderId = model.PurchaseOrderId,
                 CreatedDate = DateTime.UtcNow,
                 ModifiedDate = DateTime.UtcNow
@@ -324,7 +325,7 @@ namespace Application.Services.SupplierServices
 
             foreach (var supplier in suppliers)
             {
-                var user = await _userRepository.GetById(supplier.UserId);
+                User user = await _userRepository.GetById(supplier.UserId);
 
                 if (user != null)
                 {
