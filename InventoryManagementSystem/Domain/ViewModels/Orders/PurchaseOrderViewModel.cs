@@ -39,10 +39,10 @@ namespace Domain.ViewModels.Orders
         [Required(ErrorMessage = "Order Date is required")]
         public DateTime OrderDate { get; set; }
 
-        public List<PurchaseOrderItemCreateViewModel> Items { get; set; } = new List<PurchaseOrderItemCreateViewModel>();
+        public List<OrderItemCreateViewModel> Items { get; set; } = new List<OrderItemCreateViewModel>();
     }
 
-    public class PurchaseOrderItemCreateViewModel
+    public class OrderItemCreateViewModel
     {
         [Required(ErrorMessage = "Item ID is required")]
         public Guid ItemId { get; set; }

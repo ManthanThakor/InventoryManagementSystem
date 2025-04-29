@@ -41,6 +41,6 @@ namespace Domain.ViewModels.Orders
         public DateTime OrderDate { get; set; }
 
         [Required(ErrorMessage = "At least one item is required")]
-        public List<CustomerItemCreateViewModel> Items { get; set; } = new List<CustomerItemCreateViewModel>();
+        public List<OrderItemCreateViewModel> Items { get; set; } = new List<OrderItemCreateViewModel>();
     }
 }

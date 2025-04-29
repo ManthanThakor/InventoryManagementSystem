@@ -14,7 +14,6 @@ namespace Domain.Models
         public Guid SupplierId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
-
         public virtual Supplier? Supplier { get; set; }
         [JsonIgnore]
         public virtual ICollection<SupplierItem> SupplierItems { get; set; } = new List<SupplierItem>();

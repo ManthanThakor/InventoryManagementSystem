@@ -296,7 +296,6 @@ namespace Application.Services.SalesOrderServices
                     salesOrderViewModels.Add(salesOrderViewModel);
                 }
             }
-
             return salesOrderViewModels;
         }
     }
