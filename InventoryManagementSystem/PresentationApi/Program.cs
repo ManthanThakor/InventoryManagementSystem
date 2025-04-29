@@ -1,4 +1,4 @@
-using Application.Services.AdminService;
+﻿using Application.Services.AdminService;
 using Application.Services.AdminServices;
 using Application.Services.AuthServices;
 using Application.Services.CategoryServices;
@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PresentationApi.Extensions;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -109,6 +110,21 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    // Add the Admin role policy
+    options.AddPolicy("RequireAdminRole", policy =>
+        policy.RequireRole("Admin"));
+
+    // Add policy for Admin or Supplier
+    options.AddPolicy("AdminOrSupplier", policy =>
+        policy.RequireRole("Admin", "Supplier"));
+
+    // Add policy for Admin or Customer
+    options.AddPolicy("AdminOrCustomer", policy =>
+        policy.RequireRole("Admin", "Customer"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -116,31 +132,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // Apply migrations and seed data in development environment
-    using (var scope = app.Services.CreateScope())
-    {
-        var services = scope.ServiceProvider;
-        try
-        {
-            var dbContext = services.GetRequiredService<ApplicationDbContext>();
-            dbContext.Database.Migrate();
-
-            // Seed admin user
-            var authService = services.GetRequiredService<IAuthService>();
-            authService.EnsureAdminUserExists().Wait();
-        }
-        catch (Exception ex)
-        {
-            var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-        }
-    }
+    app.UseDeveloperExceptionPage();
 }
 else
 {
-    // In production, use HTTPS redirection and HSTS
-    app.UseHttpsRedirection();
+    app.UseExceptionHandler("/error");
     app.UseHsts();
 }
 
@@ -156,5 +152,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
+    await authService.EnsureAdminUserExists();
+}
+// Seed the database with initial data
+await app.SeedDatabaseAsync();
+
 
 app.Run();

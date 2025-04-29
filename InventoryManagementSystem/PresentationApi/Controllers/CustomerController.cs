@@ -22,7 +22,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<IEnumerable<CustomerViewModel>>> GetAllCustomers()
         {
             var customers = await _customerService.GetAllCustomers();
@@ -30,7 +30,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<CustomerDetailViewModel>> GetCustomerById(Guid id)
         {
             try
@@ -49,7 +49,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<CustomerViewModel>> UpdateCustomer(Guid id, CustomerUpdateViewModel model)
         {
             if (id != model.Id)

@@ -21,7 +21,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<IEnumerable<SalesOrderListViewModel>>> GetAllSalesOrders()
         {
             var salesOrders = await _salesOrderService.GetAllSalesOrders();
@@ -29,7 +29,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<SalesOrderDetailViewModel>> GetSalesOrderById(Guid id)
         {
             try
@@ -48,7 +48,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<SalesOrderViewModel>> CreateSalesOrder(SalesOrderCreateViewModel model)
         {
             try
@@ -71,7 +71,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult> DeleteSalesOrder(Guid id)
         {
             try
@@ -90,7 +90,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("customer/{customerId}")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<IEnumerable<SalesOrderListViewModel>>> GetSalesOrdersByCustomer(Guid customerId)
         {
             try
@@ -109,7 +109,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("search")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<IEnumerable<SalesOrderListViewModel>>> SearchSalesOrders([FromQuery] string searchTerm)
         {
             if (string.IsNullOrEmpty(searchTerm))

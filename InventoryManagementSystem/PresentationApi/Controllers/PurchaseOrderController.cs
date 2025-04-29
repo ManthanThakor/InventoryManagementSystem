@@ -21,7 +21,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<IEnumerable<PurchaseOrderListViewModel>>> GetAllPurchaseOrders()
         {
             var purchaseOrders = await _purchaseOrderService.GetAllPurchaseOrders();
@@ -29,7 +29,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<PurchaseOrderDetailViewModel>> GetPurchaseOrderById(Guid id)
         {
             try
@@ -48,7 +48,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<PurchaseOrderViewModel>> CreatePurchaseOrder(PurchaseOrderCreateViewModel model)
         {
             try
@@ -71,7 +71,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult> DeletePurchaseOrder(Guid id)
         {
             try
@@ -90,7 +90,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("supplier/{supplierId}")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<IEnumerable<PurchaseOrderListViewModel>>> GetPurchaseOrdersBySupplier(Guid supplierId)
         {
             try
@@ -109,7 +109,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("search")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<IEnumerable<PurchaseOrderListViewModel>>> SearchPurchaseOrders([FromQuery] string searchTerm)
         {
             if (string.IsNullOrEmpty(searchTerm))

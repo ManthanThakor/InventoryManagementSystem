@@ -1,0 +1,2 @@
+﻿[12:48:02 Info] Creating dotnet tool manifest.
+[12:48:04 Info] Executing command 'dotnet new tool-manifest'.

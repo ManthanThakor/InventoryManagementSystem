@@ -22,7 +22,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<IEnumerable<SupplierViewModel>>> GetAllSuppliers()
         {
             var suppliers = await _supplierService.GetAllSuppliers();
@@ -30,7 +30,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<SupplierDetailViewModel>> GetSupplierById(Guid id)
         {
             try
@@ -49,7 +49,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<SupplierViewModel>> UpdateSupplier(Guid id, SupplierUpdateViewModel model)
         {
             if (id != model.Id)
@@ -77,7 +77,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<ActionResult> DeleteSupplier(Guid id)
         {
             try
@@ -99,7 +99,6 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("{supplierId}/items")]
-        [Authorize(Roles = "Admin,Customer,Supplier")]
         public async Task<ActionResult<IEnumerable<SupplierItemViewModel>>> GetItemsBySupplier(Guid supplierId)
         {
             try
@@ -118,7 +117,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpPost("items")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult<SupplierItemViewModel>> AddSupplierItem(SupplierItemCreateViewModel model)
         {
             try
@@ -141,7 +140,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpDelete("items/{supplierItemId}")]
-        [Authorize(Roles = "Admin,Supplier")]
+        [Authorize(Policy = "AdminOrSupplier")]
         public async Task<ActionResult> RemoveSupplierItem(Guid supplierItemId)
         {
             try
@@ -163,7 +162,7 @@ namespace PresentationApi.Controllers
         }
 
         [HttpGet("search")]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Policy = "AdminOrCustomer")]
         public async Task<ActionResult<IEnumerable<SupplierViewModel>>> SearchSuppliers([FromQuery] string searchTerm)
         {
             if (string.IsNullOrEmpty(searchTerm))
