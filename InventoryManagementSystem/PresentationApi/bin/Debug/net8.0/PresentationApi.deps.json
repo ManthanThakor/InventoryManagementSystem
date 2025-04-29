@@ -1291,18 +1291,12 @@
           "Infrastructure": "1.0.0"
         },
         "runtime": {
-          "Application.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Application.dll": {}
         }
       },
       "Domain/1.0.0": {
         "runtime": {
-          "Domain.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Domain.dll": {}
         }
       },
       "Infrastructure/1.0.0": {
@@ -1315,10 +1309,7 @@
           "System.IdentityModel.Tokens.Jwt": "8.4.0"
         },
         "runtime": {
-          "Infrastructure.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Infrastructure.dll": {}
         }
       }
     }

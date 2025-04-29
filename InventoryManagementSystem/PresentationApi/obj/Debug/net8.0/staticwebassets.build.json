@@ -1,12 +1,11 @@
 {
   "Version": 1,
-  "Hash": "wOhgLFLogoz1bAp4SVDHaGOVieePZnQ8bV+rHM2OwpU=",
+  "Hash": "KpeyWuluFhh0095WXKRP2iFubPrtTc991n+pPtZx3ag=",
   "Source": "PresentationApi",
   "BasePath": "_content/PresentationApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": []
 }
