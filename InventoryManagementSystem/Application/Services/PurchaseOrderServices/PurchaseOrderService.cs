@@ -1,5 +1,6 @@
 ﻿using Application.Services.GeneralServices;
 using Domain.Models;
+using Domain.ViewModels.Item;
 using Domain.ViewModels.Orders;
 using Domain.ViewModels.Supplier;
 using Infrastructure.Repository;
@@ -79,7 +80,7 @@ namespace Application.Services.PurchaseOrderServices
 
                 if (item != null)
                 {
-                    var itemViewModel = new Domain.ViewModels.Item.ItemViewModel
+                    ItemViewModel itemViewModel = new ItemViewModel
                     {
                         Id = item.Id,
                         Name = item.Name,
@@ -88,7 +89,7 @@ namespace Application.Services.PurchaseOrderServices
                         SellingPrice = item.SellingPrice
                     };
 
-                    var supplierItemViewModel = new SupplierItemViewModel
+                    SupplierItemViewModel supplierItemViewModel = new SupplierItemViewModel
                     {
                         Id = supplierItem.Id,
                         Item = itemViewModel,
@@ -128,7 +129,7 @@ namespace Application.Services.PurchaseOrderServices
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var supplier = await _supplierRepository.GetById(model.SupplierId);
+            Supplier supplier = await _supplierRepository.GetById(model.SupplierId);
             if (supplier == null)
             {
                 throw new InvalidOperationException($"Supplier with ID {model.SupplierId} not found.");
