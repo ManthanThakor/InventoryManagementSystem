@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PresentationApi.Extensions;
+using PresentationApi.Seed;  // Add this import
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +42,9 @@ builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();
 builder.Services.AddScoped<IUserTypeService, UserTypeService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+
+// Register DatabaseSeeder
+builder.Services.AddScoped<DatabaseSeeder>();
 
 builder.Services.AddControllers();
 
@@ -112,15 +116,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    // Add the Admin role policy
     options.AddPolicy("RequireAdminRole", policy =>
         policy.RequireRole("Admin"));
 
-    // Add policy for Admin or Supplier
     options.AddPolicy("AdminOrSupplier", policy =>
         policy.RequireRole("Admin", "Supplier"));
 
-    // Add policy for Admin or Customer
     options.AddPolicy("AdminOrCustomer", policy =>
         policy.RequireRole("Admin", "Customer"));
 });
@@ -153,13 +154,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
-    await authService.EnsureAdminUserExists();
-}
 // Seed the database with initial data
 await app.SeedDatabaseAsync();
-
 
 app.Run();

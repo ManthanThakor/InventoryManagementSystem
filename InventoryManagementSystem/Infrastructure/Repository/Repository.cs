@@ -59,18 +59,11 @@ namespace Infrastructure.Repository
             return await _dbSet.Where(match).ToListAsync();
         }
 
-        public async Task<T> FindSingle(Expression<Func<T, bool>> match)
+        public async Task<T?> FindSingle(Expression<Func<T, bool>> match)
         {
-            var entity = await _dbSet.FirstOrDefaultAsync(match);
-            if (entity == null)
-            {
-                _logger.LogError("Entity not found for the given criteria.");
-
-                throw new EntityNotFoundException($"{typeof(T).Name} matching the condition was not found.");
-
-            }
-            return entity;
+            return await _dbSet.FirstOrDefaultAsync(match);
         }
+
 
         public async Task<int> SaveChangesMethod()
         {

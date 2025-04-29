@@ -7,7 +7,6 @@ using Domain.ViewModels.JwtUser;
 using Domain.ViewModels.Supplier;
 using Domain.ViewModels.User;
 using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.AuthServices
 {
@@ -247,36 +246,6 @@ namespace Application.Services.AuthServices
             return true;
         }
 
-        public async Task EnsureAdminUserExists()
-        {
-            UserType adminUserType = await _userTypeRepository.FindSingle(ut => ut.Name == "Admin");
 
-            if (adminUserType == null)
-            {
-                adminUserType = new UserType
-                {
-                    Name = "Admin",
-                    CreatedDate = DateTime.UtcNow,
-                    ModifiedDate = DateTime.UtcNow
-                };
-                adminUserType = await _userTypeRepository.Add(adminUserType);
-            }
-
-            User adminUser = await _userRepository.FindSingle(u => u.Username == "admin");
-
-            if (adminUser == null)
-            {
-                adminUser = new User
-                {
-                    FullName = "System Administrator",
-                    Username = "admin",
-                    PasswordHash = _passwordService.HashPassword("admin@123"),
-                    UserTypeId = adminUserType.Id,
-                    CreatedDate = DateTime.UtcNow,
-                    ModifiedDate = DateTime.UtcNow
-                };
-                await _userRepository.Add(adminUser);
-            }
-        }
     }
 }

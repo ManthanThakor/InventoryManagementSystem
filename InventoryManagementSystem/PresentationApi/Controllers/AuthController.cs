@@ -99,12 +99,13 @@ namespace PresentationApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("profile")]
         public async Task<IActionResult> GetUserProfile()
         {
             try
             {
-                var userId = GetCurrentUserId();
+                Guid userId = GetCurrentUserId();
 
                 if (userId == Guid.Empty)
                 {
@@ -120,6 +121,7 @@ namespace PresentationApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
         {
@@ -148,7 +150,7 @@ namespace PresentationApi.Controllers
 
         private Guid GetCurrentUserId()
         {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "userId");
+            System.Security.Claims.Claim? userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "userId");
 
             if (userIdClaim != null)
             {
@@ -158,6 +160,8 @@ namespace PresentationApi.Controllers
                     return userId;
                 }
             }
+
+            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
 
             return Guid.Empty;
         }

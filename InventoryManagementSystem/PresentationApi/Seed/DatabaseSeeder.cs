@@ -70,7 +70,6 @@ namespace PresentationApi.Seed
                         };
 
                         await repository.Add(userType);
-                        // Use SaveChangesMethod
                         await repository.SaveChangesMethod();
                         _logger.LogInformation($"Created user type: {typeName}");
                     }
