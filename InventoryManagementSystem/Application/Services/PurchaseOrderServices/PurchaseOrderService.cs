@@ -141,7 +141,7 @@ namespace Application.Services.PurchaseOrderServices
                 OrderNo = orderNo,
                 SupplierId = model.SupplierId,
                 OrderDate = model.OrderDate,
-                TotalAmount = 0, 
+                TotalAmount = 0,
                 CreatedDate = DateTime.UtcNow,
                 ModifiedDate = DateTime.UtcNow
             };
@@ -219,7 +219,6 @@ namespace Application.Services.PurchaseOrderServices
                 await _supplierItemRepository.Delete(supplierItem);
             }
 
-            // Then delete the purchase order
             await _purchaseOrderRepository.Delete(purchaseOrder);
 
             return true;
