@@ -52,7 +52,7 @@ namespace PresentationApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("CreateItem")]
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> CreateItem([FromBody] ItemCreateViewModel model)
         {
