@@ -278,6 +278,5 @@ namespace Application.Services.AuthServices
                 await _userRepository.Add(adminUser);
             }
         }
-    }7
-
+    }
 }

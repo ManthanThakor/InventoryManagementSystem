@@ -22,3 +22,15 @@ D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\D
 D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\refint\Domain.dll
 D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.pdb
 D:\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\ref\Domain.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\bin\Debug\net8.0\Domain.deps.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\bin\Debug\net8.0\Domain.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\bin\Debug\net8.0\Domain.pdb
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\refint\Domain.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\Domain.pdb
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\Domain\obj\Debug\net8.0\ref\Domain.dll
