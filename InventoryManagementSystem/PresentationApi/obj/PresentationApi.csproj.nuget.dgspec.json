@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj": {}
+    "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj": {}
   },
   "projects": {
-    "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj": {
+    "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj",
+        "projectUniqueName": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\Manthan Thakor\\.nuget\\packages\\",
-        "outputPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\obj\\",
+        "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\TGSUser147\\.nuget\\packages\\",
+        "outputPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Manthan Thakor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\TGSUser147\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj"
+              "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -47,8 +48,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -69,24 +69,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj": {
+    "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj",
+        "projectUniqueName": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Manthan Thakor\\.nuget\\packages\\",
-        "outputPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\obj\\",
+        "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\TGSUser147\\.nuget\\packages\\",
+        "outputPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Manthan Thakor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\TGSUser147\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -95,6 +95,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -112,8 +113,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -134,24 +134,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj": {
+    "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Manthan Thakor\\.nuget\\packages\\",
-        "outputPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\obj\\",
+        "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\TGSUser147\\.nuget\\packages\\",
+        "outputPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Manthan Thakor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\TGSUser147\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -160,14 +160,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj"
+              "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj": {
+                "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Domain\\Domain.csproj"
               }
             }
           }
@@ -181,8 +182,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -231,24 +231,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj": {
+    "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj",
+        "projectUniqueName": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj",
         "projectName": "PresentationApi",
-        "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj",
-        "packagesPath": "C:\\Users\\Manthan Thakor\\.nuget\\packages\\",
-        "outputPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\obj\\",
+        "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj",
+        "packagesPath": "C:\\Users\\TGSUser147\\.nuget\\packages\\",
+        "outputPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Manthan Thakor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\TGSUser147\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -257,14 +257,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj": {
-                "projectPath": "D:\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj"
+              "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj": {
+                "projectPath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\Application\\Application.csproj"
               }
             }
           }
@@ -278,8 +279,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -315,7 +315,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
