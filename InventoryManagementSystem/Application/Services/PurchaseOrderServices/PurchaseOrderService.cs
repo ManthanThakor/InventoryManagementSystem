@@ -234,7 +234,7 @@ namespace Application.Services.PurchaseOrderServices
                 throw new InvalidOperationException($"Supplier with ID {supplierId} not found.");
             }
 
-            var purchaseOrders = await _purchaseOrderRepository.FindAll(po => po.SupplierId == supplierId);
+            IEnumerable<PurchaseOrder> purchaseOrders = await _purchaseOrderRepository.FindAll(po => po.SupplierId == supplierId);
 
             List<PurchaseOrderListViewModel> purchaseOrderViewModels = new List<PurchaseOrderListViewModel>();
 
