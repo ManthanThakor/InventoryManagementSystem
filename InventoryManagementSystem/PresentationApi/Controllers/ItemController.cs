@@ -21,7 +21,7 @@ namespace PresentationApi.Controllers
         {
             try
             {
-                var items = await _itemService.GetAllItems();
+                IEnumerable<ItemViewModel> items = await _itemService.GetAllItems();
                 return Ok(items);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace PresentationApi.Controllers
         {
             try
             {
-                var item = await _itemService.GetItemById(id);
+                ItemDetailViewModel item = await _itemService.GetItemById(id);
 
                 if (item != null)
                 {
@@ -63,7 +63,7 @@ namespace PresentationApi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var item = await _itemService.CreateItem(model);
+                ItemViewModel item = await _itemService.CreateItem(model);
                 return CreatedAtAction(nameof(GetItemById), new { id = item.Id }, item);
             }
             catch (Exception ex)
@@ -88,7 +88,7 @@ namespace PresentationApi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var item = await _itemService.UpdateItem(model);
+                ItemViewModel item = await _itemService.UpdateItem(model);
                 return Ok(item);
             }
             catch (Exception ex)
@@ -103,7 +103,7 @@ namespace PresentationApi.Controllers
         {
             try
             {
-                var result = await _itemService.DeleteItem(id);
+                bool result = await _itemService.DeleteItem(id);
 
                 if (result)
                 {
@@ -125,7 +125,7 @@ namespace PresentationApi.Controllers
         {
             try
             {
-                var items = await _itemService.GetItemsByCategory(categoryId);
+                IEnumerable<ItemViewModel> items = await _itemService.GetItemsByCategory(categoryId);
                 return Ok(items);
             }
             catch (Exception ex)
@@ -144,7 +144,7 @@ namespace PresentationApi.Controllers
                     return BadRequest(new { success = false, message = "Search term cannot be empty." });
                 }
 
-                var items = await _itemService.SearchItems(searchTerm);
+                IEnumerable<ItemViewModel> items = await _itemService.SearchItems(searchTerm);
                 return Ok(items);
             }
             catch (Exception ex)

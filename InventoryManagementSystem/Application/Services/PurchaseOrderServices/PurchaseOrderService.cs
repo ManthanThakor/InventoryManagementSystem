@@ -64,7 +64,7 @@ namespace Application.Services.PurchaseOrderServices
                 throw new InvalidOperationException($"Purchase Order with ID {id} not found.");
             }
 
-            var supplier = await _supplierRepository.GetById(purchaseOrder.SupplierId);
+            Supplier supplier = await _supplierRepository.GetById(purchaseOrder.SupplierId);
 
             if (supplier == null)
             {
