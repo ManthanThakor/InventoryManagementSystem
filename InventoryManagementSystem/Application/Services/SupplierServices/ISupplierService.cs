@@ -10,7 +10,7 @@ namespace Application.Services.SupplierServices
         Task<SupplierViewModel> UpdateSupplier(SupplierUpdateViewModel model);
         Task<bool> DeleteSupplier(Guid id);
         Task<IEnumerable<SupplierItemViewModel>> GetItemsBySupplier(Guid supplierId);
-        Task<SupplierItemViewModel> AddSupplierItem(SupplierItemCreateViewModel model);
+
         Task<bool> RemoveSupplierItem(Guid supplierItemId);
         Task<IEnumerable<SupplierViewModel>> SearchSuppliers(string searchTerm);
     }

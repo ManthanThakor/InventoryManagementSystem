@@ -117,28 +117,7 @@ namespace PresentationApi.Controllers
             }
         }
 
-        [HttpPost("items")]
-        [Authorize(Roles = "Admin,Customer")]
-        public async Task<ActionResult<CustomerItemViewModel>> AddCustomerItem(CustomerItemCreateViewModel model)
-        {
-            try
-            {
-                var customerItem = await _customerService.AddCustomerItem(model);
-                return CreatedAtAction(nameof(GetItemsByCustomer), new { customerId = model.CustomerId }, customerItem);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+
 
 
         [HttpDelete("items/{customerItemId}")]

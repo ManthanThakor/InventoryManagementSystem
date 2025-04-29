@@ -10,7 +10,7 @@ namespace Application.Services.CustomerServices
         Task<CustomerViewModel> UpdateCustomer(CustomerUpdateViewModel model);
         Task<bool> DeleteCustomer(Guid id);
         Task<IEnumerable<CustomerItemViewModel>> GetItemsByCustomer(Guid customerId);
-        Task<CustomerItemViewModel> AddCustomerItem(CustomerItemCreateViewModel model);
+
         Task<bool> RemoveCustomerItem(Guid customerItemId);
         Task<IEnumerable<CustomerViewModel>> SearchCustomers(string searchTerm);
     }

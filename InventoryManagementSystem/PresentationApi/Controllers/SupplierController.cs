@@ -116,28 +116,6 @@ namespace PresentationApi.Controllers
             }
         }
 
-        [HttpPost("items")]
-        [Authorize(Policy = "AdminOrSupplier")]
-        public async Task<ActionResult<SupplierItemViewModel>> AddSupplierItem(SupplierItemCreateViewModel model)
-        {
-            try
-            {
-                var supplierItem = await _supplierService.AddSupplierItem(model);
-                return CreatedAtAction(nameof(GetItemsBySupplier), new { supplierId = model.SupplierId }, supplierItem);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
 
         [HttpDelete("items/{supplierItemId}")]
         [Authorize(Policy = "AdminOrSupplier")]

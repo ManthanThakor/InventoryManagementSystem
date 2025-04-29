@@ -243,59 +243,7 @@ namespace Application.Services.CustomerServices
             return customerItemViewModels;
         }
 
-        public async Task<CustomerItemViewModel> AddCustomerItem(CustomerItemCreateViewModel model)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
 
-            // Verify customer exists
-            var customer = await _customerRepository.GetById(model.CustomerId);
-            if (customer == null)
-            {
-                throw new InvalidOperationException($"Customer with ID {model.CustomerId} not found.");
-            }
-
-            // Verify item exists
-            var item = await _itemRepository.GetById(model.ItemId);
-            if (item == null)
-            {
-                throw new InvalidOperationException($"Item with ID {model.ItemId} not found.");
-            }
-
-            decimal gstAmount = (item.SellingPrice * item.GSTPercent) / 100;
-
-            decimal totalAmount = item.SellingPrice + gstAmount;
-
-            CustomerItem customerItem = new CustomerItem
-            {
-                ItemId = model.ItemId,
-                CustomerId = model.CustomerId,
-                GSTAmount = gstAmount,
-                TotalAmount = totalAmount,
-                SalesOrderId = model.SalesOrderId,
-                CreatedDate = DateTime.UtcNow,
-                ModifiedDate = DateTime.UtcNow
-            };
-
-            CustomerItem createdCustomerItem = await _customerItemRepository.Add(customerItem);
-
-            return new CustomerItemViewModel
-            {
-                Id = createdCustomerItem.Id,
-                Item = new Domain.ViewModels.Item.ItemViewModel
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    GSTPercent = item.GSTPercent,
-                    PurchasePrice = item.PurchasePrice,
-                    SellingPrice = item.SellingPrice
-                },
-                GSTAmount = createdCustomerItem.GSTAmount,
-                TotalAmount = createdCustomerItem.TotalAmount
-            };
-        }
 
         public async Task<bool> RemoveCustomerItem(Guid customerItemId)
         {

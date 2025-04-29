@@ -175,8 +175,8 @@ namespace Application.Services.SalesOrderServices
                         ItemId = itemModel.ItemId,
                         CustomerId = model.CustomerId,
                         SalesOrderId = createdSalesOrder.Id,
-                        GSTAmount = gstAmount,
-                        TotalAmount = totalItemAmount,
+                        GSTAmount = gstAmount,  // Calculated, not from input
+                        TotalAmount = totalItemAmount, // Calculated, not from input
                         CreatedDate = DateTime.UtcNow,
                         ModifiedDate = DateTime.UtcNow
                     };

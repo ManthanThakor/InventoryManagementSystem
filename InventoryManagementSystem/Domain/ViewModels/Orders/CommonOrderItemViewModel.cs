@@ -58,6 +58,6 @@ namespace Domain.ViewModels.Orders
         public Guid CustomerId { get; set; }
 
         [Required(ErrorMessage = "Sales Order ID is required")]
-        public Guid SalesOrderId { get; set; }
+        public Guid? SalesOrderId { get; set; }
     }
 }

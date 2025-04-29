@@ -240,57 +240,7 @@ namespace Application.Services.SupplierServices
             return supplierItemViewModels;
         }
 
-        public async Task<SupplierItemViewModel> AddSupplierItem(SupplierItemCreateViewModel model)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
 
-            var supplier = await _supplierRepository.GetById(model.SupplierId);
-            if (supplier == null)
-            {
-                throw new InvalidOperationException($"Supplier with ID {model.SupplierId} not found.");
-            }
-
-            var item = await _itemRepository.GetById(model.ItemId);
-            if (item == null)
-            {
-                throw new InvalidOperationException($"Item with ID {model.ItemId} not found.");
-            }
-
-            decimal gstAmount = (item.PurchasePrice * item.GSTPercent) / 100;
-
-            decimal totalAmount = item.PurchasePrice + gstAmount;
-
-            SupplierItem supplierItem = new SupplierItem
-            {
-                ItemId = model.ItemId,
-                SupplierId = model.SupplierId,
-                GSTAmount = gstAmount,
-                TotalAmount = totalAmount,
-                PurchaseOrderId = model.PurchaseOrderId,
-                CreatedDate = DateTime.UtcNow,
-                ModifiedDate = DateTime.UtcNow
-            };
-
-            SupplierItem createdSupplierItem = await _supplierItemRepository.Add(supplierItem);
-
-            return new SupplierItemViewModel
-            {
-                Id = createdSupplierItem.Id,
-                Item = new Domain.ViewModels.Item.ItemViewModel
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    GSTPercent = item.GSTPercent,
-                    PurchasePrice = item.PurchasePrice,
-                    SellingPrice = item.SellingPrice
-                },
-                GSTAmount = createdSupplierItem.GSTAmount,
-                TotalAmount = createdSupplierItem.TotalAmount
-            };
-        }
 
         public async Task<bool> RemoveSupplierItem(Guid supplierItemId)
         {
