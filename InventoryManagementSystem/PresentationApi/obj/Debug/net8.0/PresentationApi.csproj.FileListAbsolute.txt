@@ -377,7 +377,6 @@ E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationAp
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\PresentationApi.sourcelink.json
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\appsettings.Development.json
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\appsettings.json
-E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\PresentationApi.staticwebassets.endpoints.json
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\PresentationApi.exe
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\PresentationApi.deps.json
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\PresentationApi.runtimeconfig.json
@@ -541,9 +540,7 @@ E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationAp
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\scopedcss\bundle\PresentationApi.styles.css
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets.build.json
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets.development.json
-E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.PresentationApi.Microsoft.AspNetCore.StaticWebAssets.props
-E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.PresentationApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.build.PresentationApi.props
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.PresentationApi.props
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.PresentationApi.props
@@ -551,3 +548,6 @@ E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationAp
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\Presenta.74B6C64A.Up2Date
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\PresentationApi.genruntimeconfig.cache
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\ref\PresentationApi.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\PresentationApi.staticwebassets.endpoints.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.PresentationApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props

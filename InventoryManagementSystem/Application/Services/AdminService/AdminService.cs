@@ -109,7 +109,6 @@ namespace Application.Services.AdminServices
                 throw new InvalidOperationException($"UserType with ID {model.Id} not found.");
             }
 
-            // Check if name already exists for other user types
             var existingUserType = await _userTypeRepository.FindSingle(ut => ut.Name == model.Name && ut.Id != model.Id);
             if (existingUserType != null)
             {

@@ -1,96 +1,175 @@
 ﻿using Application.Services.CategoryServices;
 using Domain.ViewModels.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using PresentationApi.Filters;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PresentationApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    [Authorize]
+    public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-        private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(
-            ICategoryService categoryService,
-            ILogger<CategoriesController> logger)
+        public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
-            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryViewModel>>> GetAll()
+        public async Task<IActionResult> GetAllCategories()
         {
-            _logger.LogInformation("Getting all categories");
-            var categories = await _categoryService.GetAllCategories();
-            return Ok(categories);
+            try
+            {
+                var categories = await _categoryService.GetAllCategories();
+                if (categories != null)
+                {
+                    return Ok(categories);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryDetailViewModel>> GetById(Guid id)
+        public async Task<IActionResult> GetCategoryById(Guid id)
         {
-            _logger.LogInformation("Getting category with ID: {CategoryId}", id);
-            var category = await _categoryService.GetCategoryById(id);
-            return Ok(category);
+            try
+            {
+                var category = await _categoryService.GetCategoryById(id);
+                if (category != null)
+                {
+                    return Ok(category);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
 
         [HttpPost]
-        [ServiceFilter(typeof(ValidateModelAttribute))]
-        public async Task<ActionResult<CategoryViewModel>> Create([FromBody] CategoryCreateViewModel model)
+        [Authorize(Policy = "RequireAdminRole")]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateViewModel model)
         {
-            _logger.LogInformation("Creating new category: {CategoryName}", model.Name);
-            var createdCategory = await _categoryService.CreateCategory(model);
-            _logger.LogInformation("Created category with ID: {CategoryId}", createdCategory.Id);
-            return CreatedAtAction(nameof(GetById), new { id = createdCategory.Id }, createdCategory);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var category = await _categoryService.CreateCategory(model);
+                    if (category != null)
+                    {
+                        return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, category);
+                    }
+                    else
+                    {
+                        return BadRequest("Failed to create category.");
+                    }
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
 
         [HttpPut("{id}")]
-        [ServiceFilter(typeof(ValidateModelAttribute))]
-        public async Task<ActionResult<CategoryViewModel>> Update(Guid id, [FromBody] CategoryUpdateViewModel model)
+        [Authorize(Policy = "RequireAdminRole")]
+        public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] CategoryUpdateViewModel model)
         {
-            if (id != model.Id)
+            try
             {
-                _logger.LogWarning("ID mismatch in update request. Route ID: {RouteId}, Body ID: {BodyId}", id, model.Id);
-                return BadRequest("ID mismatch");
+                if (id == model.Id)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var category = await _categoryService.UpdateCategory(model);
+                        if (category != null)
+                        {
+                            return Ok(category);
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(ModelState);
+                    }
+                }
+                else
+                {
+                    return BadRequest("ID mismatch");
+                }
             }
-
-            _logger.LogInformation("Updating category with ID: {CategoryId}", id);
-            var updatedCategory = await _categoryService.UpdateCategory(model);
-            return Ok(updatedCategory);
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [Authorize(Policy = "RequireAdminRole")]
+        public async Task<IActionResult> DeleteCategory(Guid id)
         {
-            _logger.LogInformation("Deleting category with ID: {CategoryId}", id);
-            var result = await _categoryService.DeleteCategory(id);
-
-            if (!result)
+            try
             {
-                _logger.LogWarning("Category with ID {CategoryId} not found for deletion", id);
-                return NotFound();
+                var result = await _categoryService.DeleteCategory(id);
+                if (result)
+                {
+                    return Ok(new { success = true });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, message = "Failed to delete category." });
+                }
             }
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<CategoryViewModel>>> Search([FromQuery] string term)
+        public async Task<IActionResult> SearchCategories([FromQuery] string searchTerm)
         {
-            if (string.IsNullOrWhiteSpace(term))
+            try
             {
-                return BadRequest("Search term cannot be empty");
+                var categories = await _categoryService.SearchCategories(searchTerm);
+                if (categories != null && categories.Any())
+                {
+                    return Ok(categories);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
 
-            _logger.LogInformation("Searching categories with term: {SearchTerm}", term);
-            var categories = await _categoryService.SearchCategories(term);
-            return Ok(categories);
+        private IActionResult HandleException(Exception ex)
+        {
+            return StatusCode(500, new { success = false, message = ex.Message });
         }
     }
 }
