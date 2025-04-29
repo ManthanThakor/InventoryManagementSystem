@@ -1,5 +1,6 @@
 ﻿using Application.Services.GeneralServices;
 using Domain.Models;
+using Domain.ViewModels.Category;
 using Domain.ViewModels.Item;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -22,20 +23,35 @@ namespace Application.Services.ItemServices
         public async Task<IEnumerable<ItemViewModel>> GetAllItems()
         {
             IEnumerable<Item> items = await _itemRepository.FindAll(i => true);
-            var itemsWithCategory = items.Select(i => new ItemViewModel
+
+            List<ItemViewModel> itemsWithCategory = new List<ItemViewModel>();
+            foreach (Item item in items)
             {
-                Id = i.Id,
-                Name = i.Name,
-                GSTPercent = i.GSTPercent,
-                PurchasePrice = i.PurchasePrice,
-                SellingPrice = i.SellingPrice,
-                Category = i.Category != null ? new Domain.ViewModels.Category.CategoryViewModel
+                ItemViewModel itemViewModel = new ItemViewModel
                 {
-                    Id = i.Category.Id,
-                    Name = i.Category.Name,
-                    Description = i.Category.Description
-                } : null
-            });
+                    Id = item.Id,
+                    Name = item.Name,
+                    GSTPercent = item.GSTPercent,
+                    PurchasePrice = item.PurchasePrice,
+                    SellingPrice = item.SellingPrice
+                };
+
+                if (item.Category != null)
+                {
+                    itemViewModel.Category = new CategoryViewModel
+                    {
+                        Id = item.Category.Id,
+                        Name = item.Category.Name,
+                        Description = item.Category.Description
+                    };
+                }
+                else
+                {
+                    itemViewModel.Category = null;
+                }
+
+                itemsWithCategory.Add(itemViewModel);
+            }
 
             return itemsWithCategory;
         }
@@ -59,14 +75,22 @@ namespace Application.Services.ItemServices
                 PurchasePrice = item.PurchasePrice,
                 SellingPrice = item.SellingPrice,
                 CreatedDate = item.CreatedDate,
-                ModifiedDate = item.ModifiedDate,
-                Category = category != null ? new Domain.ViewModels.Category.CategoryViewModel
+                ModifiedDate = item.ModifiedDate
+            };
+
+            if (category != null)
+            {
+                itemViewModel.Category = new CategoryViewModel
                 {
                     Id = category.Id,
                     Name = category.Name,
                     Description = category.Description
-                } : null
-            };
+                };
+            }
+            else
+            {
+                itemViewModel.Category = null;
+            }
 
             return itemViewModel;
         }
@@ -78,7 +102,7 @@ namespace Application.Services.ItemServices
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var category = await _categoryRepository.GetById(model.CategoryId);
+            Category category = await _categoryRepository.GetById(model.CategoryId);
             if (category == null)
             {
                 throw new InvalidOperationException($"Category with ID {model.CategoryId} not found.");
@@ -104,7 +128,7 @@ namespace Application.Services.ItemServices
                 GSTPercent = createdItem.GSTPercent,
                 PurchasePrice = createdItem.PurchasePrice,
                 SellingPrice = createdItem.SellingPrice,
-                Category = new Domain.ViewModels.Category.CategoryViewModel
+                Category = new CategoryViewModel
                 {
                     Id = category.Id,
                     Name = category.Name,
@@ -129,7 +153,6 @@ namespace Application.Services.ItemServices
                 throw new InvalidOperationException($"Item with ID {model.Id} not found.");
             }
 
-            // Verify category exists
             var category = await _categoryRepository.GetById(model.CategoryId);
             if (category == null)
             {
@@ -145,14 +168,14 @@ namespace Application.Services.ItemServices
 
             await _itemRepository.Update(item);
 
-            ItemViewModel itemViewModel = new ItemViewModel
+            var itemViewModel = new ItemViewModel
             {
                 Id = item.Id,
                 Name = item.Name,
                 GSTPercent = item.GSTPercent,
                 PurchasePrice = item.PurchasePrice,
                 SellingPrice = item.SellingPrice,
-                Category = new Domain.ViewModels.Category.CategoryViewModel
+                Category = new CategoryViewModel
                 {
                     Id = category.Id,
                     Name = category.Name,
@@ -178,7 +201,6 @@ namespace Application.Services.ItemServices
 
         public async Task<IEnumerable<ItemViewModel>> GetItemsByCategory(Guid categoryId)
         {
-            // Verify category exists
             var category = await _categoryRepository.GetById(categoryId);
             if (category == null)
             {
@@ -187,20 +209,26 @@ namespace Application.Services.ItemServices
 
             IEnumerable<Item> items = await _itemRepository.FindAll(i => i.CategoryId == categoryId);
 
-            var itemViewModels = items.Select(i => new ItemViewModel
+            var itemViewModels = new List<ItemViewModel>();
+            foreach (var item in items)
             {
-                Id = i.Id,
-                Name = i.Name,
-                GSTPercent = i.GSTPercent,
-                PurchasePrice = i.PurchasePrice,
-                SellingPrice = i.SellingPrice,
-                Category = new Domain.ViewModels.Category.CategoryViewModel
+                var viewModel = new ItemViewModel
                 {
-                    Id = category.Id,
-                    Name = category.Name,
-                    Description = category.Description
-                }
-            });
+                    Id = item.Id,
+                    Name = item.Name,
+                    GSTPercent = item.GSTPercent,
+                    PurchasePrice = item.PurchasePrice,
+                    SellingPrice = item.SellingPrice,
+                    Category = new CategoryViewModel
+                    {
+                        Id = category.Id,
+                        Name = category.Name,
+                        Description = category.Description
+                    }
+                };
+
+                itemViewModels.Add(viewModel);
+            }
 
             return itemViewModels;
         }
@@ -223,20 +251,30 @@ namespace Application.Services.ItemServices
             {
                 var category = await _categoryRepository.GetById(item.CategoryId);
 
-                itemViewModels.Add(new ItemViewModel
+                var viewModel = new ItemViewModel
                 {
                     Id = item.Id,
                     Name = item.Name,
                     GSTPercent = item.GSTPercent,
                     PurchasePrice = item.PurchasePrice,
-                    SellingPrice = item.SellingPrice,
-                    Category = category != null ? new Domain.ViewModels.Category.CategoryViewModel
+                    SellingPrice = item.SellingPrice
+                };
+
+                if (category != null)
+                {
+                    viewModel.Category = new CategoryViewModel
                     {
                         Id = category.Id,
                         Name = category.Name,
                         Description = category.Description
-                    } : null
-                });
+                    };
+                }
+                else
+                {
+                    viewModel.Category = null;
+                }
+
+                itemViewModels.Add(viewModel);
             }
 
             return itemViewModels;

@@ -81,7 +81,6 @@ namespace Application.Services.CustomerServices
                 throw new InvalidOperationException($"User associated with customer ID {id} not found.");
             }
 
-            // Get customer items
             var customerItems = await _customerItemRepository.FindAll(ci => ci.CustomerId == id);
             var customerItemViewModels = new List<CustomerItemViewModel>();
 
@@ -112,7 +111,6 @@ namespace Application.Services.CustomerServices
                 }
             }
 
-            // Get sales orders for this customer
             var salesOrders = await _salesOrderRepository.FindAll(so => so.CustomerId == id);
             var salesOrderViewModels = new List<SalesOrderListViewModel>();
 

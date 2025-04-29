@@ -5,6 +5,7 @@ using Domain.ViewModels.Customer;
 using Domain.ViewModels.Supplier;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace PresentationApi.Controllers
 {
@@ -99,71 +100,62 @@ namespace PresentationApi.Controllers
             }
         }
 
-        [Authorize]
-        [HttpGet("profile")]
-        public async Task<IActionResult> GetUserProfile()
-        {
-            try
-            {
-                Guid userId = GetCurrentUserId();
+        //[Authorize]
+        //[HttpGet("profile")]
+        //public async Task<IActionResult> GetUserProfile()
+        //{
+        //    try
+        //    {
+        //        Guid userId = GetCurrentUserId();
 
-                if (userId == Guid.Empty)
-                {
-                    return Unauthorized();
-                }
+        //        if (userId == Guid.Empty)
+        //        {
+        //            return Unauthorized();
+        //        }
 
-                var profile = await _authService.GetUserProfile(userId);
-                return Ok(profile);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { success = false, message = ex.Message });
-            }
-        }
+        //        var profile = await _authService.GetUserProfile(userId);
+        //        return Ok(profile);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { success = false, message = ex.Message });
+        //    }
+        //}
 
-        [Authorize]
-        [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+        //[Authorize]
+        //[HttpPost("change-password")]
+        //public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return BadRequest(ModelState);
+        //        }
 
-                var userId = GetCurrentUserId();
+        //        var userId = GetCurrentUserId();
 
-                if (userId == Guid.Empty)
-                {
-                    return Unauthorized();
-                }
+        //        if (userId == Guid.Empty)
+        //        {
+        //            return Unauthorized();
+        //        }
 
-                var result = await _authService.ChangePassword(userId, model);
-                return Ok(new { success = result });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { success = false, message = ex.Message });
-            }
-        }
+        //        var result = await _authService.ChangePassword(userId, model);
+        //        return Ok(new { success = result });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { success = false, message = ex.Message });
+        //    }
+        //}
 
-        private Guid GetCurrentUserId()
-        {
-            System.Security.Claims.Claim? userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "userId");
+        //private Guid GetCurrentUserId()
+        //{
+        //    Guid userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (userIdClaim != null)
-            {
-                bool isValidGuid = Guid.TryParse(userIdClaim.Value, out Guid userId);
-                if (isValidGuid)
-                {
-                    return userId;
-                }
-            }
 
-            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+        //    return Ok(new { UserId = userId });
 
-            return Guid.Empty;
-        }
+        //}
     }
 }
