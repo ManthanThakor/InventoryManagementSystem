@@ -203,7 +203,6 @@ namespace Application.Services.AdminServices
                 throw new InvalidOperationException("Cannot delete the system administrator account.");
             }
 
-            // Check if user is associated with customer or supplier
             var customer = await _customerRepository.FindSingle(c => c.UserId == id);
             if (customer != null)
             {
@@ -222,7 +221,6 @@ namespace Application.Services.AdminServices
 
         public async Task<DashboardViewModel> GetDashboardStats()
         {
-            // Get counts
             int customersCount = (await _customerRepository.GetAll()).Count();
             int suppliersCount = (await _supplierRepository.GetAll()).Count();
             int categoriesCount = (await _categoryRepository.GetAll()).Count();

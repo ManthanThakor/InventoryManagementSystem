@@ -100,62 +100,65 @@ namespace PresentationApi.Controllers
             }
         }
 
-        //[Authorize]
-        //[HttpGet("profile")]
-        //public async Task<IActionResult> GetUserProfile()
-        //{
-        //    try
-        //    {
-        //        Guid userId = GetCurrentUserId();
+        [Authorize]
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetUserProfile()
+        {
+            try
+            {
+                Guid userId = GetCurrentUserId();
 
-        //        if (userId == Guid.Empty)
-        //        {
-        //            return Unauthorized();
-        //        }
+                if (userId == Guid.Empty)
+                {
+                    return Unauthorized();
+                }
 
-        //        var profile = await _authService.GetUserProfile(userId);
-        //        return Ok(profile);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, new { success = false, message = ex.Message });
-        //    }
-        //}
+                var profile = await _authService.GetUserProfile(userId);
+                return Ok(profile);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
 
-        //[Authorize]
-        //[HttpPost("change-password")]
-        //public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-        //        var userId = GetCurrentUserId();
+                var userId = GetCurrentUserId();
 
-        //        if (userId == Guid.Empty)
-        //        {
-        //            return Unauthorized();
-        //        }
+                if (userId == Guid.Empty)
+                {
+                    return Unauthorized();
+                }
 
-        //        var result = await _authService.ChangePassword(userId, model);
-        //        return Ok(new { success = result });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, new { success = false, message = ex.Message });
-        //    }
-        //}
+                var result = await _authService.ChangePassword(userId, model);
+                return Ok(new { success = result });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
 
-        //private Guid GetCurrentUserId()
-        //{
-        //    Guid userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        private Guid GetCurrentUserId()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out Guid userId))
+            {
+                return Guid.Empty;
+            }
 
-        //    return Ok(new { UserId = userId });
-
-        //}
+            return userId;
+        }
     }
 }
