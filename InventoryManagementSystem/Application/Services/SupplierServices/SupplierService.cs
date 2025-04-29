@@ -191,14 +191,12 @@ namespace Application.Services.SupplierServices
                 return false;
             }
 
-            // First delete related supplier items
             var supplierItems = await _supplierItemRepository.FindAll(si => si.SupplierId == id);
             foreach (var supplierItem in supplierItems)
             {
                 await _supplierItemRepository.Delete(supplierItem);
             }
 
-            // Then delete the supplier
             await _supplierRepository.Delete(supplier);
 
             return true;
@@ -345,7 +343,6 @@ namespace Application.Services.SupplierServices
                     });
                 }
             }
-
             return supplierViewModels;
         }
     }
