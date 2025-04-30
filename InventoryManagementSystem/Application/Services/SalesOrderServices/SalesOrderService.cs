@@ -69,7 +69,6 @@ namespace Application.Services.SalesOrderServices
                 throw new InvalidOperationException($"Customer associated with Sales Order ID {id} not found.");
             }
 
-            // Get customer items for this sales order
             var customerItems = await _customerItemRepository.FindAll(ci => ci.SalesOrderId == id);
             var customerItemViewModels = new List<CustomerItemViewModel>();
 
@@ -128,33 +127,28 @@ namespace Application.Services.SalesOrderServices
                 throw new ArgumentNullException(nameof(model));
             }
 
-            // Verify customer exists
             var customer = await _customerRepository.GetById(model.CustomerId);
             if (customer == null)
             {
                 throw new InvalidOperationException($"Customer with ID {model.CustomerId} not found.");
             }
 
-            // Generate a new order number
             string orderNo = $"SO-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
 
-            // Create sales order
             SalesOrder salesOrder = new SalesOrder
             {
                 OrderNo = orderNo,
                 CustomerId = model.CustomerId,
                 OrderDate = model.OrderDate,
-                TotalAmount = 0, // Initialize, will be updated after adding items
+                TotalAmount = 0,
                 CreatedDate = DateTime.UtcNow,
                 ModifiedDate = DateTime.UtcNow
             };
 
             SalesOrder createdSalesOrder = await _salesOrderRepository.Add(salesOrder);
 
-            // Calculate total amount from the items
             decimal totalAmount = 0;
 
-            // If items list is provided, add them to the order
             if (model.Items != null && model.Items.Any())
             {
                 foreach (var itemModel in model.Items)
@@ -166,7 +160,6 @@ namespace Application.Services.SalesOrderServices
                         throw new InvalidOperationException($"Item with ID {itemModel.ItemId} not found.");
                     }
 
-                    // Calculate GST amount
                     decimal gstAmount = (item.SellingPrice * item.GSTPercent) / 100;
                     decimal totalItemAmount = item.SellingPrice + gstAmount;
 
@@ -175,8 +168,8 @@ namespace Application.Services.SalesOrderServices
                         ItemId = itemModel.ItemId,
                         CustomerId = model.CustomerId,
                         SalesOrderId = createdSalesOrder.Id,
-                        GSTAmount = gstAmount,  // Calculated, not from input
-                        TotalAmount = totalItemAmount, // Calculated, not from input
+                        GSTAmount = gstAmount,
+                        TotalAmount = totalItemAmount,
                         CreatedDate = DateTime.UtcNow,
                         ModifiedDate = DateTime.UtcNow
                     };
@@ -187,7 +180,6 @@ namespace Application.Services.SalesOrderServices
                 }
             }
 
-            // Update the total amount
             createdSalesOrder.TotalAmount = totalAmount;
             await _salesOrderRepository.Update(createdSalesOrder);
 
@@ -220,7 +212,6 @@ namespace Application.Services.SalesOrderServices
                 return false;
             }
 
-            // First delete related customer items
             var customerItems = await _customerItemRepository.FindAll(ci => ci.SalesOrderId == id);
 
             foreach (var customerItem in customerItems)
@@ -228,7 +219,6 @@ namespace Application.Services.SalesOrderServices
                 await _customerItemRepository.Delete(customerItem);
             }
 
-            // Then delete the sales order
             await _salesOrderRepository.Delete(salesOrder);
 
             return true;

@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\InventoryManagementSystem"
+    "\\InventoryManagementSystem",
+    "\\InventoryManagementSystem\\Application",
+    "\\InventoryManagementSystem\\Application\\Services",
+    "\\InventoryManagementSystem\\Application\\Services\\AuthServices"
   ],
-  "SelectedNode": "\\InventoryManagementSystem\\InventoryManagementSystem.sln",
+  "SelectedNode": "\\InventoryManagementSystem\\Application\\Services\\AuthServices\\AuthService.cs",
   "PreviewInSolutionExplorer": false
 }

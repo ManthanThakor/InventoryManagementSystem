@@ -16,7 +16,6 @@ namespace Application.Services.CustomerServices
         private readonly IRepository<Item> _itemRepository;
         private readonly IRepository<SalesOrder> _salesOrderRepository;
 
-
         public CustomerService(
             IRepository<Customer> customerRepository,
             IRepository<User> userRepository,
@@ -34,7 +33,6 @@ namespace Application.Services.CustomerServices
         public async Task<IEnumerable<CustomerViewModel>> GetAllCustomers()
         {
             IEnumerable<Customer> customers = await _customerRepository.GetAll();
-
             List<CustomerViewModel> customerViewModels = new List<CustomerViewModel>();
 
             foreach (var customer in customers)
@@ -166,20 +164,30 @@ namespace Application.Services.CustomerServices
 
             var user = await _userRepository.GetById(customer.UserId);
 
-            return new CustomerViewModel
+            CustomerViewModel viewModel = new CustomerViewModel
             {
                 Id = customer.Id,
                 Name = customer.Name,
                 Address = customer.Address,
-                Contact = customer.Contact,
-                User = user != null ? new UserProfileViewModel
+                Contact = customer.Contact
+            };
+
+            if (user != null)
+            {
+                viewModel.User = new UserProfileViewModel
                 {
                     Id = user.Id,
                     FullName = user.FullName,
                     Username = user.Username,
                     UserType = "Customer"
-                } : null
-            };
+                };
+            }
+            else
+            {
+                viewModel.User = null;
+            }
+
+            return viewModel;
         }
 
         public async Task<bool> DeleteCustomer(Guid id)
@@ -191,7 +199,6 @@ namespace Application.Services.CustomerServices
                 return false;
             }
 
-            // First delete related customer items
             var customerItems = await _customerItemRepository.FindAll(ci => ci.CustomerId == id);
 
             foreach (var customerItem in customerItems)
@@ -199,7 +206,6 @@ namespace Application.Services.CustomerServices
                 await _customerItemRepository.Delete(customerItem);
             }
 
-            // Then delete the customer
             await _customerRepository.Delete(customer);
 
             return true;
@@ -242,8 +248,6 @@ namespace Application.Services.CustomerServices
 
             return customerItemViewModels;
         }
-
-
 
         public async Task<bool> RemoveCustomerItem(Guid customerItemId)
         {

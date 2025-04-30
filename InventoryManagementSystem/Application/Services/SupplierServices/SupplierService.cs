@@ -33,7 +33,6 @@ namespace Application.Services.SupplierServices
         public async Task<IEnumerable<SupplierViewModel>> GetAllSuppliers()
         {
             IEnumerable<Supplier> suppliers = await _supplierRepository.GetAll();
-
             List<SupplierViewModel> supplierViewModels = new List<SupplierViewModel>();
 
             foreach (var supplier in suppliers)
@@ -56,7 +55,6 @@ namespace Application.Services.SupplierServices
                             UserType = "Supplier"
                         }
                     };
-
                     supplierViewModels.Add(supplierViewModel);
                 }
             }
@@ -67,52 +65,44 @@ namespace Application.Services.SupplierServices
         public async Task<SupplierDetailViewModel> GetSupplierById(Guid id)
         {
             Supplier supplier = await _supplierRepository.GetById(id);
-
             if (supplier == null)
             {
                 throw new InvalidOperationException($"Supplier with ID {id} not found.");
             }
 
             var user = await _userRepository.GetById(supplier.UserId);
-
             if (user == null)
             {
                 throw new InvalidOperationException($"User associated with supplier ID {id} not found.");
             }
 
-            // Get supplier items
             var supplierItems = await _supplierItemRepository.FindAll(si => si.SupplierId == id);
             var supplierItemViewModels = new List<SupplierItemViewModel>();
 
             foreach (var supplierItem in supplierItems)
             {
                 var item = await _itemRepository.GetById(supplierItem.ItemId);
-
                 if (item != null)
                 {
-                    var itemViewModel = new Domain.ViewModels.Item.ItemViewModel
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        GSTPercent = item.GSTPercent,
-                        PurchasePrice = item.PurchasePrice,
-                        SellingPrice = item.SellingPrice
-                    };
-
-                    var supplierItemViewModel = new SupplierItemViewModel
+                    supplierItemViewModels.Add(new SupplierItemViewModel
                     {
                         Id = supplierItem.Id,
-                        Item = itemViewModel,
+                        Item = new Domain.ViewModels.Item.ItemViewModel
+                        {
+                            Id = item.Id,
+                            Name = item.Name,
+                            GSTPercent = item.GSTPercent,
+                            PurchasePrice = item.PurchasePrice,
+                            SellingPrice = item.SellingPrice
+                        },
                         GSTAmount = supplierItem.GSTAmount,
                         TotalAmount = supplierItem.TotalAmount
-                    };
-
-                    supplierItemViewModels.Add(supplierItemViewModel);
+                    });
                 }
             }
 
-            IEnumerable<PurchaseOrder> purchaseOrders = await _purchaseOrderRepository.FindAll(po => po.SupplierId == id);
-            List<PurchaseOrderListViewModel> purchaseOrderViewModels = new List<PurchaseOrderListViewModel>();
+            var purchaseOrders = await _purchaseOrderRepository.FindAll(po => po.SupplierId == id);
+            var purchaseOrderViewModels = new List<PurchaseOrderListViewModel>();
 
             foreach (var order in purchaseOrders)
             {
@@ -151,7 +141,6 @@ namespace Application.Services.SupplierServices
             }
 
             Supplier supplier = await _supplierRepository.GetById(model.Id);
-
             if (supplier == null)
             {
                 throw new InvalidOperationException($"Supplier with ID {model.Id} not found.");
@@ -161,31 +150,34 @@ namespace Application.Services.SupplierServices
             supplier.Address = model.Address;
             supplier.Contact = model.Contact;
             supplier.ModifiedDate = DateTime.UtcNow;
-
             await _supplierRepository.Update(supplier);
 
             var user = await _userRepository.GetById(supplier.UserId);
-
-            return new SupplierViewModel
+            SupplierViewModel viewModel = new SupplierViewModel
             {
                 Id = supplier.Id,
                 Name = supplier.Name,
                 Address = supplier.Address,
-                Contact = supplier.Contact,
-                User = user != null ? new UserProfileViewModel
+                Contact = supplier.Contact
+            };
+
+            if (user != null)
+            {
+                viewModel.User = new UserProfileViewModel
                 {
                     Id = user.Id,
                     FullName = user.FullName,
                     Username = user.Username,
                     UserType = "Supplier"
-                } : null
-            };
+                };
+            }
+
+            return viewModel;
         }
 
         public async Task<bool> DeleteSupplier(Guid id)
         {
             Supplier supplier = await _supplierRepository.GetById(id);
-
             if (supplier == null)
             {
                 return false;
@@ -198,14 +190,12 @@ namespace Application.Services.SupplierServices
             }
 
             await _supplierRepository.Delete(supplier);
-
             return true;
         }
 
         public async Task<IEnumerable<SupplierItemViewModel>> GetItemsBySupplier(Guid supplierId)
         {
             Supplier supplier = await _supplierRepository.GetById(supplierId);
-
             if (supplier == null)
             {
                 throw new InvalidOperationException($"Supplier with ID {supplierId} not found.");
@@ -217,7 +207,6 @@ namespace Application.Services.SupplierServices
             foreach (var supplierItem in supplierItems)
             {
                 var item = await _itemRepository.GetById(supplierItem.ItemId);
-
                 if (item != null)
                 {
                     supplierItemViewModels.Add(new SupplierItemViewModel
@@ -240,12 +229,9 @@ namespace Application.Services.SupplierServices
             return supplierItemViewModels;
         }
 
-
-
         public async Task<bool> RemoveSupplierItem(Guid supplierItemId)
         {
             SupplierItem supplierItem = await _supplierItemRepository.GetById(supplierItemId);
-
             if (supplierItem == null)
             {
                 return false;
@@ -257,9 +243,11 @@ namespace Application.Services.SupplierServices
 
         public async Task<IEnumerable<SupplierViewModel>> SearchSuppliers(string searchTerm)
         {
+            List<SupplierViewModel> supplierViewModels = new List<SupplierViewModel>();
+
             if (string.IsNullOrEmpty(searchTerm))
             {
-                return new List<SupplierViewModel>();
+                return supplierViewModels;
             }
 
             string lowerSearchTerm = searchTerm.ToLower();
@@ -269,30 +257,31 @@ namespace Application.Services.SupplierServices
                 s.Address.ToLower().Contains(lowerSearchTerm) ||
                 s.Contact.ToLower().Contains(lowerSearchTerm));
 
-            List<SupplierViewModel> supplierViewModels = new List<SupplierViewModel>();
-
             foreach (var supplier in suppliers)
             {
-                User user = await _userRepository.GetById(supplier.UserId);
+                var user = await _userRepository.GetById(supplier.UserId);
+                SupplierViewModel viewModel = new SupplierViewModel
+                {
+                    Id = supplier.Id,
+                    Name = supplier.Name,
+                    Address = supplier.Address,
+                    Contact = supplier.Contact
+                };
 
                 if (user != null)
                 {
-                    supplierViewModels.Add(new SupplierViewModel
+                    viewModel.User = new UserProfileViewModel
                     {
-                        Id = supplier.Id,
-                        Name = supplier.Name,
-                        Address = supplier.Address,
-                        Contact = supplier.Contact,
-                        User = new UserProfileViewModel
-                        {
-                            Id = user.Id,
-                            FullName = user.FullName,
-                            Username = user.Username,
-                            UserType = "Supplier"
-                        }
-                    });
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        Username = user.Username,
+                        UserType = "Supplier"
+                    };
                 }
+
+                supplierViewModels.Add(viewModel);
             }
+
             return supplierViewModels;
         }
     }

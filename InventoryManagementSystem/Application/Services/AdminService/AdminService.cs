@@ -43,11 +43,18 @@ namespace Application.Services.AdminServices
         {
             IEnumerable<UserType> userTypes = await _userTypeRepository.GetAll();
 
-            return userTypes.Select(ut => new UserTypeViewModel
+            List<UserTypeViewModel> userTypeViewModels = new List<UserTypeViewModel>();
+
+            foreach (var ut in userTypes)
             {
-                Id = ut.Id,
-                Name = ut.Name
-            });
+                userTypeViewModels.Add(new UserTypeViewModel
+                {
+                    Id = ut.Id,
+                    Name = ut.Name
+                });
+            }
+
+            return userTypeViewModels;
         }
 
         public async Task<UserTypeViewModel> GetUserTypeById(Guid id)
@@ -59,11 +66,13 @@ namespace Application.Services.AdminServices
                 throw new InvalidOperationException($"UserType with ID {id} not found.");
             }
 
-            return new UserTypeViewModel
+            UserTypeViewModel userTypeViewModel = new UserTypeViewModel
             {
                 Id = userType.Id,
                 Name = userType.Name
             };
+
+            return userTypeViewModel;
         }
 
         public async Task<UserTypeViewModel> CreateUserType(UserTypeCreateViewModel model)
@@ -88,11 +97,13 @@ namespace Application.Services.AdminServices
 
             UserType createdUserType = await _userTypeRepository.Add(userType);
 
-            return new UserTypeViewModel
+            UserTypeViewModel userTypeViewModel = new UserTypeViewModel
             {
                 Id = createdUserType.Id,
                 Name = createdUserType.Name
             };
+
+            return userTypeViewModel;
         }
 
         public async Task<UserTypeViewModel> UpdateUserType(UserTypeUpdateViewModel model)
@@ -120,11 +131,13 @@ namespace Application.Services.AdminServices
 
             await _userTypeRepository.Update(userType);
 
-            return new UserTypeViewModel
+            UserTypeViewModel userTypeViewModel = new UserTypeViewModel
             {
                 Id = userType.Id,
                 Name = userType.Name
             };
+
+            return userTypeViewModel;
         }
 
         public async Task<bool> DeleteUserType(Guid id)
@@ -161,7 +174,7 @@ namespace Application.Services.AdminServices
                     Id = user.Id,
                     FullName = user.FullName,
                     Username = user.Username,
-                    UserType = userType?.Name ?? "Unknown"
+                    UserType = userType != null ? userType.Name : "Unknown"
                 });
             }
 
@@ -179,13 +192,15 @@ namespace Application.Services.AdminServices
 
             var userType = await _userTypeRepository.GetById(user.UserTypeId);
 
-            return new UserProfileViewModel
+            UserProfileViewModel userProfileViewModel = new UserProfileViewModel
             {
                 Id = user.Id,
                 FullName = user.FullName,
                 Username = user.Username,
-                UserType = userType?.Name ?? "Unknown"
+                UserType = userType != null ? userType.Name : "Unknown"
             };
+
+            return userProfileViewModel;
         }
 
         public async Task<bool> DeleteUser(Guid id)
@@ -198,7 +213,7 @@ namespace Application.Services.AdminServices
             }
 
             var userType = await _userTypeRepository.GetById(user.UserTypeId);
-            if (userType?.Name == "Admin" && user.Username == "admin")
+            if (userType != null && userType.Name == "Admin" && user.Username == "admin")
             {
                 throw new InvalidOperationException("Cannot delete the system administrator account.");
             }
@@ -226,18 +241,25 @@ namespace Application.Services.AdminServices
             int categoriesCount = (await _categoryRepository.GetAll()).Count();
             int itemsCount = (await _itemRepository.GetAll()).Count();
 
-            // Get sales orders
-            var salesOrders = await _salesOrderRepository.GetAll();
-            decimal salesTotal = salesOrders.Sum(so => so.TotalAmount);
-            int salesCount = salesOrders.Count();
+            IEnumerable<SalesOrder> salesOrders = await _salesOrderRepository.GetAll();
+            decimal salesTotal = 0;
+            int salesCount = 0;
+            foreach (SalesOrder so in salesOrders)
+            {
+                salesTotal += so.TotalAmount;
+                salesCount++;
+            }
 
-            // Get purchase orders
-            var purchaseOrders = await _purchaseOrderRepository.GetAll();
-            decimal purchaseTotal = purchaseOrders.Sum(po => po.TotalAmount);
-            int purchaseCount = purchaseOrders.Count();
+            IEnumerable<PurchaseOrder> purchaseOrders = await _purchaseOrderRepository.GetAll();
+            decimal purchaseTotal = 0;
+            int purchaseCount = 0;
+            foreach (PurchaseOrder po in purchaseOrders)
+            {
+                purchaseTotal += po.TotalAmount;
+                purchaseCount++;
+            }
 
-            // Get recent sales
-            var recentSales = salesOrders
+            IEnumerable<RecentOrderViewModel> recentSales = salesOrders
                 .OrderByDescending(so => so.OrderDate)
                 .Take(5)
                 .Select(so => new RecentOrderViewModel
@@ -248,8 +270,7 @@ namespace Application.Services.AdminServices
                     TotalAmount = so.TotalAmount
                 });
 
-            // Get recent purchases
-            var recentPurchases = purchaseOrders
+            IEnumerable<RecentOrderViewModel> recentPurchases = purchaseOrders
                 .OrderByDescending(po => po.OrderDate)
                 .Take(5)
                 .Select(po => new RecentOrderViewModel
@@ -276,3 +297,4 @@ namespace Application.Services.AdminServices
         }
     }
 }
+
