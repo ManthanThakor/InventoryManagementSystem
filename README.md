@@ -142,6 +142,8 @@ The **Presentation Layer** contains:
 
 ## Relationships
 
+![Database Diagram](PresentationApi/Images/DatabaseImages/ImsDatabaseImage.png)
+
 - **Users → UserTypes**: Many-to-One (A user belongs to a user type)
 - **Items → Categories**: Many-to-One (An item belongs to a category)
 - **SupplierItems → Suppliers**: Many-to-One (A supplier item belongs to a supplier)
