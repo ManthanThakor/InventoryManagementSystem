@@ -144,7 +144,7 @@ The **Presentation Layer** contains:
 
 Below is the visual representation of the Inventory Management System's database schema:
 
-![IMS Database Diagram](PresentationApi/Images/DatabaseImages/ImsDatabaseImg.png)
+![IMS Database Diagram](https://raw.githubusercontent.com/ManthanThakor/InventoryManagementSystem/main/InventoryManagementSystem/PresentationApi/Images/DatabaseImages/ImsDatabaseImg.png)
 
 ## Relationships
 
