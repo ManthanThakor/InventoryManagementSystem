@@ -139,10 +139,14 @@ The **Presentation Layer** contains:
 - **CustomerId**: Foreign Key to `Customers`
 - **GSTAmount**: GST on the item
 - **TotalAmount**: Total amount for the item in the order
+  
+## Database Diagram
+
+Below is the visual representation of the Inventory Management System's database schema:
+
+![IMS Database Diagram](PresentationApi/Images/DatabaseImages/ImsDatabaseImg.png)
 
 ## Relationships
-
-![Database Diagram](PresentationApi/Images/DatabaseImages/ImsDatabaseImage.png)
 
 - **Users → UserTypes**: Many-to-One (A user belongs to a user type)
 - **Items → Categories**: Many-to-One (An item belongs to a category)
