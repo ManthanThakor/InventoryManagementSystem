@@ -24,19 +24,14 @@ namespace PresentationApi.Seed
             {
                 _logger.LogInformation("Starting database seeding...");
 
-                // Create scope to resolve scoped services
-                using var scope = _serviceProvider.CreateScope();
+                using IServiceScope scope = _serviceProvider.CreateScope();
 
-                // Get the DbContext
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                // Ensure database is created
                 await dbContext.Database.EnsureCreatedAsync();
 
-                // Seed user types first
                 await SeedUserTypesAsync(scope);
 
-                // Seed initial admin user
                 await SeedAdminUserAsync(scope);
 
                 _logger.LogInformation("Database seeding completed successfully");
