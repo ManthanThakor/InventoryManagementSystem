@@ -24,11 +24,7 @@ namespace Domain.ViewModels.Orders
         [Required(ErrorMessage = "Supplier ID is required")]
         public Guid SupplierId { get; set; }
 
-        //[Required(ErrorMessage = "GST Amount is required")]
-        //public decimal GSTAmount { get; set; }
 
-        //[Required(ErrorMessage = "Total Amount is required")]
-        //public decimal TotalAmount { get; set; }
 
         [Required(ErrorMessage = "Purchase Order ID is required")]
         public Guid PurchaseOrderId { get; set; }
@@ -48,11 +44,7 @@ namespace Domain.ViewModels.Orders
         [Required(ErrorMessage = "Item is required")]
         public Guid ItemId { get; set; }
 
-        //[Required(ErrorMessage = "GST Amount is required")]
-        //public decimal GSTAmount { get; set; }
 
-        //[Required(ErrorMessage = "Total Amount is required")]
-        //public decimal TotalAmount { get; set; }
 
         [Required(ErrorMessage = "Customer ID is required")]
         public Guid CustomerId { get; set; }

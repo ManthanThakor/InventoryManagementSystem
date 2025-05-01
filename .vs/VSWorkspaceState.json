@@ -2,10 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\InventoryManagementSystem",
-    "\\InventoryManagementSystem\\Application",
-    "\\InventoryManagementSystem\\Application\\Services",
-    "\\InventoryManagementSystem\\Application\\Services\\AuthServices"
+    "\\InventoryManagementSystem\\Domain",
+    "\\InventoryManagementSystem\\Domain\\ViewModels",
+    "\\InventoryManagementSystem\\Domain\\ViewModels\\Orders",
+    "\\InventoryManagementSystem\\Domain\\ViewModels\\Supplier",
+    "\\InventoryManagementSystem\\Domain\\ViewModels\\User",
+    "\\InventoryManagementSystem\\InfrastructureLayer",
+    "\\InventoryManagementSystem\\PresentationApi",
+    "\\InventoryManagementSystem\\PresentationApi\\Controllers"
   ],
-  "SelectedNode": "\\InventoryManagementSystem\\Application\\Services\\AuthServices\\AuthService.cs",
+  "SelectedNode": "\\InventoryManagementSystem\\PresentationApi\\Controllers\\AuthController.cs",
   "PreviewInSolutionExplorer": false
 }
