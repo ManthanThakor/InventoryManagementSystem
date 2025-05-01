@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PresentationApi.Extensions;
-using PresentationApi.Seed;  // Add this import
+using PresentationApi.Seed;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -154,7 +154,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Seed the database with initial data
 await app.SeedDatabaseAsync();
 
 app.Run();
