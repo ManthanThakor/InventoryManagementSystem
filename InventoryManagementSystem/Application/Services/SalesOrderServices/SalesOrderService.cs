@@ -153,7 +153,6 @@ namespace Application.Services.SalesOrderServices
             {
                 foreach (var itemModel in model.Items)
                 {
-                    // Verify item exists
                     var item = await _itemRepository.GetById(itemModel.ItemId);
                     if (item == null)
                     {

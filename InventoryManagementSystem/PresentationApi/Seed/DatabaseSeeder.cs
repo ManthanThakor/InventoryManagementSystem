@@ -45,8 +45,8 @@ namespace PresentationApi.Seed
 
         private async Task SeedUserTypesAsync(IServiceScope scope)
         {
-            var repository = scope.ServiceProvider.GetRequiredService<IRepository<UserType>>();
-            var userTypes = new[] { "Admin", "Customer", "Supplier" };
+            IRepository<UserType> repository = scope.ServiceProvider.GetRequiredService<IRepository<UserType>>();
+            string[] userTypes = new[] { "Admin", "Customer", "Supplier" };
 
             foreach (var typeName in userTypes)
             {

@@ -548,3 +548,14 @@ E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationAp
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\Presenta.74B6C64A.Up2Date
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\PresentationApi.genruntimeconfig.cache
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\ref\PresentationApi.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Binder.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.AspNetCore.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Sinks.File.dll
