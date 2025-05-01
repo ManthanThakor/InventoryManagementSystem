@@ -88,7 +88,6 @@ namespace PresentationApi.Seed
                 var userTypeRepository = scope.ServiceProvider.GetRequiredService<IRepository<UserType>>();
                 var userRepository = scope.ServiceProvider.GetRequiredService<IRepository<User>>();
 
-                // Fix: Get all Admin user types and await it
                 var adminUserTypes = await userTypeRepository.FindAll(ut => ut.Name == "Admin");
                 var adminUserType = adminUserTypes.FirstOrDefault();
 
