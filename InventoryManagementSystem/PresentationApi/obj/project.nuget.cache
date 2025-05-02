@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BNei2qzSnIfmZipUWaEZNuhhL++yLGntiqSsI6IhJlcYluHDuzDNuXBfdQd5hmP296VbKUmRAKMYXNx71xkWoA==",
+  "dgSpecHash": "7ySYIqBFbJO7KLJy8lj9YYZf0JK/0VAfeawVwI8wK+CljgP4zdADoK4dWZ12I72Qc0nmLX0G2vEbcTjx+abnbw==",
   "success": true,
   "projectFilePath": "E:\\IMSproject\\InventoryManagementSystem\\InventoryManagementSystem\\PresentationApi\\PresentationApi.csproj",
   "expectedPackageFiles": [
@@ -76,6 +76,9 @@
     "C:\\Users\\TGSUser147\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.aspnetcore\\9.0.0\\serilog.aspnetcore.9.0.0.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.enrichers.environment\\3.0.1\\serilog.enrichers.environment.3.0.1.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.enrichers.process\\3.0.0\\serilog.enrichers.process.3.0.0.nupkg.sha512",
+    "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.enrichers.thread\\4.0.0\\serilog.enrichers.thread.4.0.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.extensions.hosting\\9.0.0\\serilog.extensions.hosting.9.0.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.extensions.logging\\9.0.0\\serilog.extensions.logging.9.0.0.nupkg.sha512",
     "C:\\Users\\TGSUser147\\.nuget\\packages\\serilog.formatting.compact\\3.0.0\\serilog.formatting.compact.3.0.0.nupkg.sha512",

@@ -20,18 +20,46 @@ using Microsoft.OpenApi.Models;
 using PresentationApi.Extensions;
 using PresentationApi.Seed;
 using Serilog;
+using Serilog.Formatting.Compact;
+using Serilog.Sinks.SystemConsole.Themes;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var customConsoleTheme = new AnsiConsoleTheme(
+    new Dictionary<ConsoleThemeStyle, string>
+    {
+        [ConsoleThemeStyle.Text] = "\x1b[38;5;253m",
+        [ConsoleThemeStyle.SecondaryText] = "\x1b[38;5;246m",
+        [ConsoleThemeStyle.TertiaryText] = "\x1b[38;5;242m",
+        [ConsoleThemeStyle.Invalid] = "\x1b[38;5;196m",
+        [ConsoleThemeStyle.Null] = "\x1b[38;5;42m",
+        [ConsoleThemeStyle.Name] = "\x1b[38;5;15m",
+        [ConsoleThemeStyle.String] = "\x1b[38;5;217m",
+        [ConsoleThemeStyle.Number] = "\x1b[38;5;151m",
+        [ConsoleThemeStyle.Boolean] = "\x1b[38;5;219m",
+        [ConsoleThemeStyle.Scalar] = "\x1b[38;5;217m",
+        [ConsoleThemeStyle.LevelVerbose] = "\x1b[38;5;137m",
+        [ConsoleThemeStyle.LevelDebug] = "\x1b[38;5;111m",
+        [ConsoleThemeStyle.LevelInformation] = "\x1b[38;5;77m",
+        [ConsoleThemeStyle.LevelWarning] = "\x1b[38;5;220m",
+        [ConsoleThemeStyle.LevelError] = "\x1b[38;5;196m",
+        [ConsoleThemeStyle.LevelFatal] = "\x1b[38;5;199m",
+    });
+
+// Configure Serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("ApplicationName", "InventoryAPI")
+    .Enrich.WithMachineName()
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithProcessId()
+    .Enrich.WithThreadId()
     .CreateLogger();
 
 builder.Host.UseSerilog();
 
-
-builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
