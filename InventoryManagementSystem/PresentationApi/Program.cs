@@ -19,7 +19,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PresentationApi.Extensions;
 using PresentationApi.Seed;
-using Serilog.Events;
 using Serilog;
 using System.Text;
 
