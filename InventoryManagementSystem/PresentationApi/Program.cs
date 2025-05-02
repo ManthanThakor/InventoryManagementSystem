@@ -123,6 +123,25 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .WithExposedHeaders("Content-Disposition");
+    });
+
+    options.AddPolicy("SignalRPolicy", policy =>
+    {
+        policy.AllowCredentials()
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .SetIsOriginAllowed(_ => true);
+    });
+});
+
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
@@ -186,6 +205,7 @@ else
 
 
 app.UseCors("AllowAll");
+app.UseCors("SignalRPolicy");
 
 app.UseExceptionHandler("/error");
 

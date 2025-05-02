@@ -76,3 +76,23 @@
 {"SourceContext":"PresentationApi.Controllers.AdminController","ActionId":"7cf3ddc1-9f2e-4036-af44-fde1d967af8c","ActionName":"PresentationApi.Controllers.AdminController.GetDashboard (PresentationApi)","RequestId":"0HNC99CDHKPMH:00000001","RequestPath":"/api/Admin/dashboard","ConnectionId":"0HNC99CDHKPMH","MachineName":"TGS147","ProcessId":7692,"ThreadId":107,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
 [2025-05-02 13:32:50.634 INF] Successfully retrieved dashboard stats.
 {"SourceContext":"PresentationApi.Controllers.AdminController","ActionId":"7cf3ddc1-9f2e-4036-af44-fde1d967af8c","ActionName":"PresentationApi.Controllers.AdminController.GetDashboard (PresentationApi)","RequestId":"0HNC99CDHKPMH:00000001","RequestPath":"/api/Admin/dashboard","ConnectionId":"0HNC99CDHKPMH","MachineName":"TGS147","ProcessId":7692,"ThreadId":107,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:36.137 INF] Starting database seeding...
+{"SourceContext":"PresentationApi.Seed.DatabaseSeeder","MachineName":"TGS147","ProcessId":17900,"ThreadId":1,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:44.807 INF] User type already exists: Admin
+{"SourceContext":"PresentationApi.Seed.DatabaseSeeder","MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:44.838 INF] User type already exists: Customer
+{"SourceContext":"PresentationApi.Seed.DatabaseSeeder","MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:44.842 INF] User type already exists: Supplier
+{"SourceContext":"PresentationApi.Seed.DatabaseSeeder","MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:45.009 INF] Admin user already exists
+{"SourceContext":"PresentationApi.Seed.DatabaseSeeder","MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:45.010 INF] Database seeding completed successfully
+{"SourceContext":"PresentationApi.Seed.DatabaseSeeder","MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:45.062 INF] Starting Inventory Management API
+{"MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 16:59:45.255 WRN] The WebRootPath was not found: E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\wwwroot. Static files may be unavailable.
+{"EventId":{"Id":16,"Name":"WebRootPathNotFound"},"SourceContext":"Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware","MachineName":"TGS147","ProcessId":17900,"ThreadId":4,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 17:00:17.093 INF] Login attempt for user: admin
+{"SourceContext":"PresentationApi.Controllers.AuthController","ActionId":"005abef9-f843-409f-8238-f8c337dc5f9d","ActionName":"PresentationApi.Controllers.AuthController.Login (PresentationApi)","RequestId":"0HNC9DII04V4J:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNC9DII04V4J","MachineName":"TGS147","ProcessId":17900,"ThreadId":6,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}
+[2025-05-02 17:00:17.772 INF] Login successful for user: admin
+{"SourceContext":"PresentationApi.Controllers.AuthController","ActionId":"005abef9-f843-409f-8238-f8c337dc5f9d","ActionName":"PresentationApi.Controllers.AuthController.Login (PresentationApi)","RequestId":"0HNC9DII04V4J:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNC9DII04V4J","MachineName":"TGS147","ProcessId":17900,"ThreadId":6,"Application":"InventoryAPI","ApplicationName":"InventoryAPI","EnvironmentName":"Development"}

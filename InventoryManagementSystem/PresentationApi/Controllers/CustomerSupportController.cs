@@ -21,14 +21,12 @@ namespace PresentationApi.Controllers
         [HttpPost("message")]
         public async Task<IActionResult> SubmitSupportMessage([FromBody] SupportMessageCreateViewModel messageViewModel)
         {
-            // Get current user ID from claims
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             {
                 return Unauthorized("User ID not found in token");
             }
 
-            // Make sure the user is submitting their own message
             messageViewModel.UserId = userId;
 
             try
@@ -49,7 +47,6 @@ namespace PresentationApi.Controllers
         [HttpGet("history")]
         public async Task<IActionResult> GetSupportHistory()
         {
-            // Get current user ID from claims
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             {
@@ -90,7 +87,6 @@ namespace PresentationApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RespondToSupportMessage([FromBody] SupportResponseViewModel responseViewModel)
         {
-            // Get admin ID from claims
             var adminIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(adminIdClaim) || !Guid.TryParse(adminIdClaim, out var adminId))
             {
