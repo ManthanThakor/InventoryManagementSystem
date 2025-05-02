@@ -11,6 +11,6 @@
     "\\InventoryManagementSystem\\PresentationApi",
     "\\InventoryManagementSystem\\PresentationApi\\Controllers"
   ],
-  "SelectedNode": "\\InventoryManagementSystem\\PresentationApi\\Controllers\\AuthController.cs",
+  "SelectedNode": "\\InventoryManagementSystem\\PresentationApi\\Controllers\\CategoryController.cs",
   "PreviewInSolutionExplorer": false
 }
