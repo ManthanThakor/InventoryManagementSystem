@@ -565,3 +565,8 @@ E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationAp
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Enrichers.Process.dll
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll
 E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\logs\inventory-api-20250502.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\PresentationApi.staticwebassets.endpoints.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\IMSproject\InventoryManagementSystem\InventoryManagementSystem\PresentationApi\obj\Debug\net8.0\staticwebassets\msbuild.PresentationApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
