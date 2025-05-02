@@ -24,7 +24,6 @@ using PresentationApi.Hubs;
 using PresentationApi.Seed;
 using PresentationApi.SignalRServices;
 using Serilog;
-using Serilog.Formatting.Compact;
 using Serilog.Sinks.SystemConsole.Themes;
 using System.Text;
 

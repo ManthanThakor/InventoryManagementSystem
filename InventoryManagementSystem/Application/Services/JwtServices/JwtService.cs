@@ -25,7 +25,7 @@ namespace Application.Services.JwtServices
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             DateTime expiration = DateTime.UtcNow.AddDays(7);
 
-            var claims = new[]
+            Claim[] claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),

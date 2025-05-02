@@ -30,8 +30,6 @@ namespace PresentationApi.Hubs
         {
             var userId = Context.User.FindFirst("UserId")?.Value;
 
-
-
             await base.OnDisconnectedAsync(exception);
         }
 
