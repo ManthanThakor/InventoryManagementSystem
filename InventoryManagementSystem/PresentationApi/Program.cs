@@ -26,7 +26,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var customConsoleTheme = new AnsiConsoleTheme(
+AnsiConsoleTheme customConsoleTheme = new AnsiConsoleTheme(
     new Dictionary<ConsoleThemeStyle, string>
     {
         [ConsoleThemeStyle.Text] = "\x1b[38;5;253m",
