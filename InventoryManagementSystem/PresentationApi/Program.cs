@@ -9,7 +9,9 @@ using Application.Services.PasswordServices;
 using Application.Services.PurchaseOrderServices;
 using Application.Services.SalesOrderServices;
 using Application.Services.SupplierServices;
+using Application.Services.SupportServices;
 using Application.Services.UserTypeServices;
+using Domain.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Infrastructure.Services;
@@ -18,7 +20,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PresentationApi.Extensions;
+using PresentationApi.Hubs;
 using PresentationApi.Seed;
+using PresentationApi.SignalRServices;
 using Serilog;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -47,7 +51,6 @@ AnsiConsoleTheme customConsoleTheme = new AnsiConsoleTheme(
         [ConsoleThemeStyle.LevelFatal] = "\x1b[38;5;199m",
     });
 
-// Configure Serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -60,6 +63,11 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+    options.MaximumReceiveMessageSize = 102400;
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -77,12 +85,15 @@ builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();
 builder.Services.AddScoped<IUserTypeService, UserTypeService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<INotificationService, SignalRNotificationService>();
+builder.Services.AddScoped<ICustomerSupportService, CustomerSupportService>();
 
 builder.Services.AddScoped<DatabaseSeeder>();
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inventory Management API", Version = "v1" });
@@ -172,6 +183,8 @@ else
     app.UseHsts();
 }
 
+
+
 app.UseCors("AllowAll");
 
 app.UseExceptionHandler("/error");
@@ -184,8 +197,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<CustomerSupportHub>("/hubs/customerSupport");
 
 await app.SeedDatabaseAsync();
+
 
 try
 {

@@ -16,6 +16,7 @@ namespace Application.Services.UserTypeServices
 
         public async Task<IEnumerable<UserTypeViewModel>> GetAllUserTypes()
         {
+
             IEnumerable<UserType> userTypes = await _userTypeRepository.GetAll();
 
             List<UserTypeViewModel> userTypeViewModels = new List<UserTypeViewModel>();

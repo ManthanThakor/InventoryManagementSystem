@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.SupportMessageHub;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
@@ -18,11 +19,25 @@ namespace Infrastructure.Data
         public DbSet<SupplierItem> SupplierItems { get; set; }
         public DbSet<SalesOrder> SalesOrders { get; set; }
         public DbSet<CustomerItem> CustomerItems { get; set; }
+        public DbSet<SupportMessage> SupportMessages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<SupportMessage>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Message).IsRequired();
+                entity.Property(e => e.AdminResponse).IsRequired(false);
+                entity.Property(e => e.ResponseDate).IsRequired(false);
+
+                entity.HasOne(e => e.User)
+                      .WithMany()
+                      .HasForeignKey(e => e.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
             modelBuilder.Entity<UserType>(entity =>
             {
                 entity.HasKey(e => e.Id);
